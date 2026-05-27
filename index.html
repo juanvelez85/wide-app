@@ -280,10 +280,7 @@
 
   <!-- EXPLORE -->
   <div id="screen-explore" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-    <div class="feed-toggle">
-      <button class="feed-toggle-btn active" id="toggle-connected" onclick="setFeedMode('connected')">Connected</button>
-      <button class="feed-toggle-btn" id="toggle-explore" onclick="setFeedMode('explore')">Explore</button>
-    </div>
+    
     <div class="feed-tabs">
       <button class="feed-tab active" id="ft-main" onclick="setFeedTab('main')">Main</button>
       <button class="feed-tab" id="ft-connections" onclick="setFeedTab('connections')">My Connections</button>
@@ -673,12 +670,7 @@ window.toggleLsConnect = async function() {
 
 
 
-window.setFeedMode = function(mode) {
-  feedMode = mode;
-  document.getElementById('toggle-connected').classList.toggle('active', mode === 'connected');
-  document.getElementById('toggle-explore').classList.toggle('active', mode === 'explore');
-  renderFeed(currentFilter);
-};
+window.setFeedMode = function(mode) { feedMode = mode; renderFeed(currentFilter); };
 
 // ── FORGOT PASSWORD ──
 window.openForgotModal = function() {
@@ -805,17 +797,12 @@ function updateLsConnectBtn() {
   if (!btn) return;
   if (post.userId === currentUser.uid) { btn.style.display='none'; return; }
   btn.style.display='';
-  if (connections.has(post.userId)) { btn.textContent='Connected'; btn.className='ls-connect-btn connected'; }
+  if (connections.has(post.userId)) { btn.textContent='🔗'; btn.className='ls-connect-btn connected'; }
   else if (pendingOut.has(post.userId)) { btn.textContent='Waiting...'; btn.className='ls-connect-btn waiting'; }
   else { btn.textContent='Connect'; btn.className='ls-connect-btn'; }
 }
 
-window.setFeedMode = function(mode) {
-  feedMode = mode;
-  document.getElementById('toggle-connected').classList.toggle('active', mode==='connected');
-  document.getElementById('toggle-explore').classList.toggle('active', mode==='explore');
-  renderFeed(currentFilter);
-};
+window.setFeedMode = function(mode) { feedMode = mode; renderFeed(currentFilter); };
 
 // ── ADDRESS BOOK ──
 window.switchAddrTab = function(tab) {
@@ -1106,7 +1093,7 @@ function renderFeed(filter) {
       <div class="card-header">
         ${avatarHtml}
         <div style="flex:1;"><div class="card-user">${post.userName||'Lorem Ipsum'}</div><div class="card-info">${post.category||'Lorem'} · ${timeAgo(post.createdAt)}</div></div>
-        ${post.userId !== currentUser.uid ? '<button class="connect-btn ' + (connections.has(post.userId) ? 'connected' : '') + '" onclick="toggleConnect(event,\'' + post.userId + '\')">'+  (connections.has(post.userId) ? 'Connected' : 'Connect') + '</button>' : ''}
+        ${post.userId !== currentUser.uid ? '<button class="connect-btn ' + (connections.has(post.userId) ? 'connected' : '') + '" onclick="toggleConnect(event,\'' + post.userId + '\')">'+  (connections.has(post.userId) ? '🔗' : 'Connect') + '</button>' : ''}
       </div>
       <div class="card-media">
         ${mediaHtml}
@@ -1819,17 +1806,4 @@ window.showToast = (msg) => {
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 };
-</script>
-<!-- FORGOT PASSWORD MODAL -->
-<div class="modal-overlay" id="forgot-modal">
-  <div class="modal-box">
-    <div class="modal-title">Reset password</div>
-    <div class="modal-sub">We'll send a reset link to your email.</div>
-    <input type="email" id="forgot-email" class="modal-input" placeholder="Your email">
-    <button class="modal-btn" onclick="sendResetEmail()">Send reset link</button>
-    <button class="modal-btn-cancel" onclick="closeForgotModal()">Cancel</button>
-    <div class="modal-msg" id="forgot-msg"></div>
-  </div>
-</div>
-</body>
-</html>
+
