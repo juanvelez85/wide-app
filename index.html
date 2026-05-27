@@ -52,15 +52,14 @@
   #portrait-view.hidden { opacity:0; pointer-events:none; transform:scale(0.97); }
 
   .p-header { padding:52px 24px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:0.5px solid var(--border); }
-  .wordmark { font-family:'FlamingoRegular',sans-serif; font-size:32px; letter-spacing:2px; }
+  .wordmark { font-family:var(--font-display); font-size:28px; letter-spacing:-0.5px; }
   .p-header-icons { display:flex; gap:20px; color:var(--muted); }
   .p-header-icons svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; cursor:pointer; }
 
   .cats { display:flex; gap:8px; padding:12px 20px; overflow-x:auto; scrollbar-width:none; border-bottom:0.5px solid var(--border); flex-shrink:0; }
   .cats::-webkit-scrollbar { display:none; }
-  .feed-tab { flex:1; padding:9px 6px; border-radius:99px; font-size:10px; white-space:nowrap; border:1.5px solid var(--border-md); color:var(--muted); cursor:pointer; transition:all 0.22s; background:var(--bg); font-family:'FlamingoRegular',sans-serif; letter-spacing:0.8px; text-transform:uppercase; text-align:center; }
-  .feed-tab.active { background:var(--text); color:#fff; border-color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,0.15); }
-  .feed-tab:not(.active):hover { border-color:rgba(0,0,0,0.3); color:var(--text); }
+  .cat { padding:5px 14px; border-radius:99px; font-size:12px; white-space:nowrap; border:0.5px solid var(--border-md); color:var(--muted); cursor:pointer; transition:all 0.2s; background:var(--bg); }
+  .cat.active { background:var(--text); color:#fff; border-color:var(--text); }
 
   .feed { flex:1; overflow-y:auto; scrollbar-width:none; padding:14px 20px 80px; }
   .feed::-webkit-scrollbar { display:none; }
@@ -82,9 +81,8 @@
   .share-link-btn svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; }
   .card-footer { padding:9px 13px 11px; display:flex; align-items:center; gap:8px; }
   .card-caption { flex:1; font-size:11px; color:var(--muted); line-height:1.4; }
-  .wow-btn { display:flex; align-items:center; gap:5px; padding:5px 14px; border-radius:99px; border:1.5px solid var(--border-md); background:transparent; color:var(--muted); font-size:10px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:'FlamingoRegular',sans-serif; }
-  .wow-btn:hover { border-color:var(--wow-border); color:var(--wow); }
-  .wow-btn.on { background:var(--wow-bg); border-color:var(--wow-border); color:var(--wow); box-shadow:0 2px 8px rgba(212,138,0,0.2); }
+  .wow-btn { display:flex; align-items:center; gap:5px; padding:5px 12px; border-radius:99px; border:0.5px solid var(--border-md); background:transparent; color:var(--muted); font-size:12px; cursor:pointer; transition:all 0.2s; white-space:nowrap; font-family:var(--font-body); }
+  .wow-btn.on { background:var(--wow-bg); border-color:var(--wow-border); color:var(--wow); }
 
   /* NAV */
   .p-nav { position:fixed; bottom:0; left:0; right:0; display:flex; border-top:0.5px solid var(--border); background:rgba(255,255,255,0.96); backdrop-filter:blur(12px); }
@@ -93,9 +91,9 @@
   .nav-btn svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.5; stroke-linecap:round; }
 
   /* SCREENS */
-  #screen-upload,#screen-profile,#screen-messages,#screen-news { display:none; flex-direction:column; flex:1; overflow:hidden; }
+  #screen-upload,#screen-profile,#screen-messages { display:none; flex-direction:column; flex:1; overflow:hidden; }
   #screen-upload.show,#screen-profile.show { display:flex; overflow-y:auto; padding:20px 20px 80px; scrollbar-width:none; }
-  #screen-messages.show { display:flex; overflow:hidden; }
+  #screen-messages.show { display:flex; }
 
   /* UPLOAD */
   .up-title { font-family:var(--font-display); font-size:24px; margin-bottom:4px; }
@@ -197,7 +195,7 @@
   .ls-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.1) 45%,transparent 100%); pointer-events:none; }
   .ls-overlay-top { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,transparent 30%); pointer-events:none; }
   .ls-top { position:absolute; top:0; left:0; right:0; padding:20px 24px 12px; display:flex; align-items:center; justify-content:space-between; }
-  .ls-wordmark { font-family:'FlamingoRegular',sans-serif; font-size:22px; color:rgba(255,255,255,0.9); letter-spacing:2px; }
+  .ls-wordmark { font-family:var(--font-display); font-size:20px; color:rgba(255,255,255,0.9); }
   .ls-close { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; color:white; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; font-family:var(--font-body); }
   .ls-bottom { position:absolute; bottom:0; left:0; right:0; padding:16px 24px 28px; }
   .ls-progress { display:flex; gap:3px; margin-bottom:12px; }
@@ -221,6 +219,29 @@
   @keyframes pulse-hint { 0%,100%{opacity:.25} 50%{opacity:.55} }
   .swipe-pulse { animation:pulse-hint 2.5s ease-in-out infinite; }
   .loading-spinner { text-align:center; padding:40px; color:var(--muted); font-size:12px; }
+
+  /* FLAMINGO + WIDE DESIGN */
+  .wordmark { font-family:'FlamingoRegular',sans-serif !important; font-size:32px !important; letter-spacing:2px !important; }
+  .nav-btn { font-family:'FlamingoRegular',sans-serif !important; letter-spacing:1px !important; }
+  .feed-tabs { display:flex; padding:10px 16px 4px; gap:6px; flex-shrink:0; }
+  .feed-tab { flex:1; padding:9px 6px; border-radius:99px; font-size:10px; white-space:nowrap; border:1.5px solid rgba(0,0,0,0.13); color:rgba(0,0,0,0.38); cursor:pointer; transition:all 0.22s; background:#fff; font-family:'FlamingoRegular',sans-serif; letter-spacing:0.8px; text-transform:uppercase; text-align:center; }
+  .feed-tab.active { background:#0a0a0a; color:#fff; border-color:#0a0a0a; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+  .connect-btn { padding:4px 10px !important; border-radius:99px !important; font-size:15px !important; border:1.5px solid rgba(0,0,0,0.13) !important; background:transparent !important; color:#0a0a0a !important; cursor:pointer !important; transition:all 0.2s !important; white-space:nowrap !important; flex-shrink:0 !important; line-height:1 !important; }
+  .connect-btn.connected { border-color:#0a0a0a !important; }
+  .ls-connect-btn { padding:6px 16px; border-radius:99px; font-size:10px; font-family:'FlamingoRegular',sans-serif; letter-spacing:1px; text-transform:uppercase; cursor:pointer; border:1.5px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.1); color:#fff; transition:all 0.2s; white-space:nowrap; }
+  .ls-connect-btn.connected { background:rgba(255,255,255,0.25); border-color:#fff; }
+  .wow-btn { font-family:'FlamingoRegular',sans-serif !important; font-size:10px !important; letter-spacing:1px !important; text-transform:uppercase !important; border-width:1.5px !important; }
+  .addr-tabs { display:flex; border-bottom:0.5px solid rgba(0,0,0,0.06); flex-shrink:0; }
+  .addr-tab { flex:1; padding:8px 4px; font-size:11px; font-family:var(--font-body); border:none; background:transparent; cursor:pointer; color:rgba(0,0,0,0.38); border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap; }
+  .addr-tab.active { color:#0a0a0a; border-bottom-color:#0a0a0a; }
+  .addr-badge { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:#0a0a0a; color:#fff; font-size:9px; margin-left:4px; }
+  .crop-wrap { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:12px; background:#111; cursor:grab; touch-action:none; margin-bottom:14px; display:none; }
+  .crop-wrap.active { display:block; }
+  .crop-img { position:absolute; max-width:none; user-select:none; pointer-events:none; }
+  .crop-frame { position:absolute; inset:0; border:2px dashed rgba(255,255,255,0.5); border-radius:12px; pointer-events:none; }
+  .crop-hint { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.65); color:#fff; font-size:10px; padding:4px 12px; border-radius:99px; white-space:nowrap; pointer-events:none; }
+  #screen-news { display:none; flex-direction:column; flex:1; overflow:hidden; }
+  #screen-news.show { display:flex; overflow:hidden; }
 </style>
 </head>
 <body>
@@ -257,8 +278,19 @@
   <div class="auth-err" id="auth-err"></div>
 </div>
 
+<div id="forgot-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:32px;">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:360px;">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;">Reset password</div>
+    <div style="font-size:12px;color:rgba(0,0,0,0.38);margin-bottom:20px;">We'll send a reset link to your email.</div>
+    <input type="email" id="forgot-email" style="width:100%;padding:11px 13px;border:0.5px solid rgba(0,0,0,0.13);border-radius:8px;font-size:14px;font-family:var(--font-body);outline:none;background:#f7f7f5;margin-bottom:12px;color:#0a0a0a;" placeholder="Your email">
+    <button onclick="sendResetEmail()" style="width:100%;padding:12px;background:#0a0a0a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:var(--font-body);cursor:pointer;margin-bottom:10px;">Send reset link</button>
+    <button onclick="closeForgotModal()" style="width:100%;padding:10px;background:transparent;border:0.5px solid rgba(0,0,0,0.13);border-radius:8px;font-size:13px;color:rgba(0,0,0,0.38);font-family:var(--font-body);cursor:pointer;">Cancel</button>
+    <div id="forgot-msg" style="font-size:12px;text-align:center;margin-top:10px;min-height:16px;"></div>
+  </div>
+</div>
+
 <!-- FORGOT PASSWORD MODAL -->
-<div class="modal-overlay" id="forgot-modal" style="display:none;">
+<div class="modal-overlay" id="forgot-modal">
   <div class="modal-box">
     <div class="modal-title">Reset password</div>
     <div class="modal-sub">We'll send a reset link to your email.</div>
@@ -280,7 +312,10 @@
 
   <!-- EXPLORE -->
   <div id="screen-explore" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-    
+    <div class="feed-toggle">
+      <button class="feed-toggle-btn active" id="toggle-connected" onclick="setFeedMode('connected')">Connected</button>
+      <button class="feed-toggle-btn" id="toggle-explore" onclick="setFeedMode('explore')">Explore</button>
+    </div>
     <div class="feed-tabs">
       <button class="feed-tab active" id="ft-main" onclick="setFeedTab('main')">Main</button>
       <button class="feed-tab" id="ft-connections" onclick="setFeedTab('connections')">My Connections</button>
@@ -298,7 +333,7 @@
       <div class="addr-tabs">
         <button class="addr-tab active" id="addr-tab-contacts" onclick="switchAddrTab('contacts')">Contacts</button>
         <button class="addr-tab" id="addr-tab-pending" onclick="switchAddrTab('pending')">Pending <span class="addr-badge" id="pending-badge" style="display:none;">0</span></button>
-        <button class="addr-tab" id="addr-tab-notifs" onclick="switchAddrTab('notifs')">Activity <span class="addr-badge" id="notifs-badge" style="display:none;">0</span></button>
+        <button class="addr-tab" id="addr-tab-notifs" onclick="switchAddrTab('notifs')">Activity</button>
       </div>
       <div id="addr-contacts" style="flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;"></div>
       <div id="addr-pending" style="flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;display:none;"></div>
@@ -310,9 +345,7 @@
   <div id="screen-news">
     <div style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
       <div class="msg-header"><div class="msg-header-title">News</div></div>
-      <div id="news-content" style="flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
-        <div class="loading-spinner">Loading...</div>
-      </div>
+      <div id="news-content" style="flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;"><div class="loading-spinner">Loading...</div></div>
     </div>
   </div>
 
@@ -324,11 +357,7 @@
       <svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
       <div class="upload-zone-text">Tap to select photos (max 3)<br>or video (max 1 min)</div>
     </div>
-    <div class="crop-wrap" id="crop-wrap">
-      <img id="crop-img" class="crop-img" alt="">
-      <div class="crop-frame"></div>
-      <div class="crop-hint">Drag to reposition · 16:9</div>
-    </div>
+    <div class="crop-wrap" id="crop-wrap"><img id="crop-img" class="crop-img" alt=""><div class="crop-frame"></div><div class="crop-hint">Drag to reposition · 16:9</div></div>
     <input type="file" id="file-input" accept="image/*,video/*" multiple style="display:none" onchange="handleFileSelect(event)">
     <div class="rules">
       <div class="rule">↔ 16:9 landscape only</div>
@@ -377,7 +406,7 @@
     </div>
     <div class="nav-btn" id="nb-news" onclick="switchTab('news')" style="position:relative;">
       <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-      <span id="news-nav-badge" style="display:none;position:absolute;top:6px;right:10px;width:14px;height:14px;border-radius:50%;background:#e74c3c;color:#fff;font-size:9px;align-items:center;justify-content:center;font-family:var(--font-body);">0</span>
+      <span id="news-nav-badge" style="display:none;position:absolute;top:6px;right:8px;width:14px;height:14px;border-radius:50%;background:#e74c3c;color:#fff;font-size:9px;align-items:center;justify-content:center;">0</span>
       News
     </div>
     <div class="nav-btn" id="nb-messages" onclick="switchTab('messages')">
@@ -438,21 +467,16 @@
     </div>
     <div class="ls-caption" id="ls-cap">Lorem ipsum</div>
     <div class="nav-hints">
+      <div class="nav-hint-item swipe-pulse"><div class="hint-arrow">←</div><div class="hint-arrow">→</div> more from account</div>
+      <div class="nav-hint-item swipe-pulse"><div class="hint-arrow">↑</div><div class="hint-arrow">↓</div> other accounts</div>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, where, serverTimestamp, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-// ── UTILS ──
-function escHtml(str) {
-  return String(str||'')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
-}
+import { getFirestore, collection, addDoc, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const CLOUDINARY_CLOUD = 'diftbzugt';
 const CLOUDINARY_PRESET = 'wide-upload';
@@ -477,10 +501,9 @@ let curAccount = 0, curPost = 0;
 let wowedPosts = new Set();
 let selectedFiles = [];
 let currentChatUserId = null;
-let connections = new Set();   // confirmed connections
-let pendingOut = new Set();    // requests I sent, waiting
-let feedMode = "main";
-let usersCache = {};
+let connections = new Set();
+let pendingOut = new Set();
+let feedMode = "connected";
 let chatUnsubscribe = null;
 let currentFilter = '';
 let authAvatarFile = null;
@@ -518,6 +541,8 @@ window.setAuthTab = (tab) => {
   document.getElementById('auth-err').textContent = '';
   var forgotEl = document.getElementById('auth-forgot');
   if (forgotEl) forgotEl.style.display = tab === 'login' ? 'block' : 'none';
+  var forgotEl=document.getElementById('auth-forgot');
+  if(forgotEl)forgotEl.style.display=tab==='login'?'block':'none';
   window._authTab = tab;
 };
 window._authTab = 'login';
@@ -554,14 +579,7 @@ window.handleAuth = async () => {
       await signInWithEmailAndPassword(auth, email, password);
     }
   } catch(e) {
-    var em = e.message || '';
-    errEl.textContent = em.indexOf('wrong-password') > -1 || em.indexOf('invalid-credential') > -1 ? 'Wrong email or password.' :
-      em.indexOf('user-not-found') > -1 ? 'No account with this email.' :
-      em.indexOf('invalid-email') > -1 ? 'Invalid email address.' :
-      em.indexOf('email-already-in-use') > -1 ? 'Email already registered.' :
-      em.indexOf('weak-password') > -1 ? 'Password must be at least 6 characters.' :
-      em.indexOf('too-many-requests') > -1 ? 'Too many attempts. Try again later.' :
-      'Something went wrong. Try again.';
+    errEl.textContent = e.message;
     document.getElementById('auth-submit').textContent = window._authTab==='login' ? 'Sign in' : 'Create account';
   }
 };
@@ -633,8 +651,19 @@ window.uploadProfilePic = async (e) => {
 };
 
 // ── CONNECTIONS ──
-
-
+async function loadConnections() {
+  if (!currentUser) return;
+  try {
+    const snap = await getDocs(collection(db,'users',currentUser.uid,'connections'));
+    connections = new Set();
+    snap.docs.forEach(function(d) {
+      if (d.data().status === 'connected') connections.add(d.id);
+      else if (d.data().status === 'pending_out') pendingOut.add(d.id);
+    });
+    const allSnap = await getDocs(collection(db,'users'));
+    allSnap.docs.forEach(function(d) { usersCache[d.id] = { id:d.id, name:d.data().name, photoURL:d.data().photoURL }; });
+  } catch(e) { connections = new Set(); pendingOut = new Set(); }
+}
 
 async function doConnect(userId) {
   connections.add(userId);
@@ -661,7 +690,26 @@ async function doDisconnect(userId) {
 window.toggleConnect = async function(e, userId) {
   e.stopPropagation();
   if (!currentUser || userId === currentUser.uid) return;
-  if (connections.has(userId)) { await doDisconnect(userId); } else { await doConnect(userId); }
+  if (connections.has(userId)) {
+    connections.delete(userId);
+    try {
+      await updateDoc(doc(db,'users',currentUser.uid,'connections',userId), { status:'disconnected' });
+      await updateDoc(doc(db,'users',userId,'connections',currentUser.uid), { status:'disconnected' });
+    } catch(err) {}
+    showToast('Disconnected');
+  } else if (pendingOut.has(userId)) {
+    showToast('Request already sent — waiting for approval');
+    return;
+  } else {
+    pendingOut.add(userId);
+    try {
+      await setDoc(doc(db,'users',currentUser.uid,'connections',userId), { status:'pending_out', requestedAt:serverTimestamp(), fromName:currentUser.displayName||'', fromPhoto:currentUser.photoURL||'' });
+      await setDoc(doc(db,'users',userId,'connections',currentUser.uid), { status:'pending_in', requestedAt:serverTimestamp(), fromName:currentUser.displayName||'', fromPhoto:currentUser.photoURL||'' });
+      const allSnap = await getDocs(collection(db,'users'));
+      allSnap.docs.forEach(function(d){ usersCache[d.id]={id:d.id,name:d.data().name,photoURL:d.data().photoURL}; });
+    } catch(err) {}
+    showToast('Connection request sent!');
+  }
   renderFeed(currentFilter);
   updateLsConnectBtn();
 };
@@ -675,126 +723,6 @@ window.toggleLsConnect = async function() {
   await window.toggleConnect(fakeE, post.userId);
 };
 
-
-
-window.setFeedMode = function(mode) { feedMode = mode; renderFeed(currentFilter); };
-
-// ── FORGOT PASSWORD ──
-window.openForgotModal = function() {
-  var emailEl = document.getElementById('auth-email');
-  if (emailEl && emailEl.value) document.getElementById('forgot-email').value = emailEl.value;
-  document.getElementById('forgot-msg').textContent = '';
-  document.getElementById('forgot-modal').style.display = 'flex';
-};
-
-window.closeForgotModal = function() {
-  document.getElementById('forgot-modal').style.display = 'none';
-  document.getElementById('forgot-msg').textContent = '';
-};
-
-window.sendResetEmail = async function() {
-  var email = document.getElementById('forgot-email').value.trim();
-  var msgEl = document.getElementById('forgot-msg');
-  if (!email) { msgEl.style.color = '#c0392b'; msgEl.textContent = 'Please enter your email.'; return; }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    msgEl.style.color = '#27ae60';
-    msgEl.textContent = 'Reset link sent! Check your inbox.';
-    setTimeout(function() { window.closeForgotModal(); }, 3000);
-  } catch(e) {
-    msgEl.style.color = '#c0392b';
-    var em = e.message || '';
-    msgEl.textContent = em.indexOf('user-not-found') > -1 ? 'No account with this email.' :
-      em.indexOf('invalid-email') > -1 ? 'Invalid email address.' :
-      em.indexOf('too-many-requests') > -1 ? 'Too many attempts. Try again later.' :
-      'Something went wrong. Try again.';
-  }
-};
-
-// ── CONNECTION SYSTEM ──
-async function loadConnections() {
-  if (!currentUser) return;
-  try {
-    const snap = await getDocs(collection(db, 'users', currentUser.uid, 'connections'));
-    connections = new Set();
-    snap.docs.forEach(function(d) {
-      if (d.data().status === 'connected') connections.add(d.id);
-      else if (d.data().status === 'pending_out') pendingOut.add(d.id);
-    });
-    // Cache all users
-    const allSnap = await getDocs(collection(db, 'users'));
-    allSnap.docs.forEach(function(d) { usersCache[d.id] = { id: d.id, ...d.data() }; });
-  } catch(e) { connections = new Set(); }
-}
-
-window.toggleConnect = async function(e, userId) {
-  e.stopPropagation();
-  if (!currentUser || userId === currentUser.uid) return;
-  const isConn = connections.has(userId);
-  const isPending = pendingOut.has(userId);
-  if (isConn) {
-    // Disconnect
-    connections.delete(userId);
-    try {
-      await updateDoc(doc(db,'users',currentUser.uid,'connections',userId), { status:'disconnected' });
-      await updateDoc(doc(db,'users',userId,'connections',currentUser.uid), { status:'disconnected' });
-    } catch(e) {}
-    showToast('Disconnected');
-  } else if (isPending) {
-    showToast('Request already sent — waiting for approval');
-    return;
-  } else {
-    // Send connection request
-    pendingOut.add(userId);
-    try {
-      await setDoc(doc(db,'users',currentUser.uid,'connections',userId), {
-        status: 'pending_out', requestedAt: serverTimestamp(),
-        fromName: currentUser.displayName || currentUser.email.split('@')[0],
-        fromPhoto: currentUser.photoURL || ''
-      });
-      await setDoc(doc(db,'users',userId,'connections',currentUser.uid), {
-        status: 'pending_in', requestedAt: serverTimestamp(),
-        fromName: currentUser.displayName || currentUser.email.split('@')[0],
-        fromPhoto: currentUser.photoURL || ''
-      });
-      // Cache this user
-      const allSnap = await getDocs(collection(db,'users'));
-      allSnap.docs.forEach(function(d) { usersCache[d.id] = { id:d.id,...d.data() }; });
-    } catch(e) {}
-    showToast('Connection request sent!');
-  }
-  renderFeed(currentFilter);
-  updateLsConnectBtn();
-};
-
-window.acceptConnection = async function(userId) {
-  try {
-    await updateDoc(doc(db,'users',currentUser.uid,'connections',userId), { status:'connected', connectedAt: serverTimestamp() });
-    await updateDoc(doc(db,'users',userId,'connections',currentUser.uid), { status:'connected', connectedAt: serverTimestamp() });
-    connections.add(userId);
-  } catch(e) { showToast('Error: ' + e.message); return; }
-  showToast('Connected! ✦');
-  loadAddressBook();
-  renderFeed(currentFilter);
-};
-
-window.declineConnection = async function(userId) {
-  try {
-    await updateDoc(doc(db,'users',currentUser.uid,'connections',userId), { status:'declined' });
-    await updateDoc(doc(db,'users',userId,'connections',currentUser.uid), { status:'declined' });
-  } catch(e) {}
-  showToast('Connection declined');
-  loadAddressBook();
-};
-
-window.toggleLsConnect = async function() {
-  const group = lsPosts[curAccount];
-  if (!group) return;
-  const post = group[Math.min(curPost, group.length-1)];
-  if (!post || post.userId === currentUser.uid) return;
-  await window.toggleConnect({ stopPropagation: function(){} }, post.userId);
-};
-
 function updateLsConnectBtn() {
   const group = lsPosts[curAccount];
   if (!group) return;
@@ -803,263 +731,50 @@ function updateLsConnectBtn() {
   const btn = document.getElementById('ls-connect-btn');
   if (!btn) return;
   if (post.userId === currentUser.uid) { btn.style.display='none'; return; }
-  btn.style.display='';
+  btn.style.display = '';
   if (connections.has(post.userId)) { btn.textContent='🔗'; btn.className='ls-connect-btn connected'; }
-  else if (pendingOut.has(post.userId)) { btn.textContent='Waiting...'; btn.className='ls-connect-btn waiting'; }
+  else if (pendingOut.has(post.userId)) { btn.textContent='...'; btn.className='ls-connect-btn'; }
   else { btn.textContent='Connect'; btn.className='ls-connect-btn'; }
 }
 
-window.setFeedMode = function(mode) { feedMode = mode; renderFeed(currentFilter); };
-
-// ── ADDRESS BOOK ──
-window.switchAddrTab = function(tab) {
-  ['contacts','pending','notifs'].forEach(function(t) {
-    var btn = document.getElementById('addr-tab-' + t);
-    var el = document.getElementById('addr-' + t);
-    if (btn) btn.classList.toggle('active', t === tab);
-    if (el) el.style.display = t === tab ? 'block' : 'none';
-  });
-  if (tab === 'notifs') loadNotifications();
-};
-
-async function loadAddressBook() {
-  if (!currentUser) return;
-  var contactsEl = document.getElementById('addr-contacts');
-  var pendingEl = document.getElementById('addr-pending');
-  var badge = document.getElementById('pending-badge');
-  if (!contactsEl) return;
-  contactsEl.innerHTML = '<div class="loading-spinner">Loading...</div>';
-  try {
-    var snap = await getDocs(collection(db,'users',currentUser.uid,'connections'));
-    var allSnap = await getDocs(collection(db,'users'));
-    allSnap.docs.forEach(function(d) {
-      usersCache[d.id] = { id:d.id, name:d.data().name, photoURL:d.data().photoURL };
-    });
-
-    var connected = [], pendingIn = [], pendingOutList = [];
-    snap.docs.forEach(function(d) {
-      var uid = d.id, status = d.data().status, u = usersCache[uid];
-      if (!u) return;
-      if (status === 'connected') { connections.add(uid); connected.push(u); }
-      else if (status === 'pending_in') pendingIn.push(u);
-      else if (status === 'pending_out') { pendingOut.add(uid); pendingOutList.push(u); }
-    });
-
-    badge.style.display = pendingIn.length > 0 ? 'inline-flex' : 'none';
-    if (pendingIn.length > 0) badge.textContent = pendingIn.length;
-    document.getElementById('prof-msgs').textContent = connected.length;
-
-    function getIni(u) {
-      return (u.name||'?').split(' ').map(function(n){return n[0]||'';}).join('').toUpperCase().slice(0,2);
-    }
-
-    // ── Contacts: compact bubble rows ──
-    if (connected.length === 0) {
-      contactsEl.innerHTML = '<div class="feed-empty" style="padding:40px 20px;">No connections yet.<br>Go to Main Page to connect!</div>';
-    } else {
-      var html = '';
-      connected.forEach(function(u) {
-        var ini = getIni(u);
-        var avHtml = u.photoURL
-          ? '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="' + u.photoURL + '" style="width:44px;height:44px;object-fit:cover;border-radius:50%;display:block;" alt=""></div>'
-          : '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--muted);flex-shrink:0;">' + ini + '</div>';
-        html += '<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:background 0.15s;" onclick="openChat(\'' + u.id + '\',\'' + escHtml(u.name||'User').replace(/'/g,'&#39;') + '\',\'' + ini + '\',\'' + (u.photoURL||'') + '\')" onmouseover="this.style.background=\'var(--surface)\'" onmouseout="this.style.background=\'\'">' +
-          avHtml +
-          '<div style="flex:1;min-width:0;">' +
-            '<div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(u.name||'User') + '</div>' +
-            '<div style="font-size:11px;color:var(--muted);margin-top:2px;">Tap to message ›</div>' +
-          '</div>' +
-        '</div>';
-      });
-      contactsEl.innerHTML = html;
-    }
-
-    // ── Pending ──
-    var ph = '';
-    if (pendingIn.length > 0) {
-      ph += '<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Requests received</div>';
-      pendingIn.forEach(function(u) {
-        var ini = getIni(u);
-        var avHtml = u.photoURL
-          ? '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="' + u.photoURL + '" style="width:44px;height:44px;object-fit:cover;border-radius:50%;display:block;" alt=""></div>'
-          : '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--muted);flex-shrink:0;">' + ini + '</div>';
-        ph += '<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">' +
-          avHtml +
-          '<div style="flex:1;min-width:0;overflow:hidden;">' +
-            '<div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(u.name||'User') + '</div>' +
-            '<div style="font-size:11px;color:#e67e22;margin-top:2px;">Wants to connect</div>' +
-          '</div>' +
-          '<div style="display:flex;gap:6px;flex-shrink:0;">' +
-            '<button style="padding:6px 14px;border-radius:99px;font-size:12px;font-family:var(--font-body);background:var(--text);color:#fff;border:none;cursor:pointer;" data-uid="' + u.id + '" onclick="acceptConnection(this.dataset.uid)">Accept</button>' +
-            '<button style="padding:6px 14px;border-radius:99px;font-size:12px;font-family:var(--font-body);background:transparent;color:var(--muted);border:0.5px solid var(--border-md);cursor:pointer;" data-uid="' + u.id + '" onclick="declineConnection(this.dataset.uid)">Decline</button>' +
-          '</div>' +
-        '</div>';
-      });
-    }
-    if (pendingOutList.length > 0) {
-      ph += '<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Requests sent</div>';
-      pendingOutList.forEach(function(u) {
-        var ini = getIni(u);
-        var avHtml = u.photoURL
-          ? '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="' + u.photoURL + '" style="width:44px;height:44px;object-fit:cover;border-radius:50%;display:block;" alt=""></div>'
-          : '<div style="width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--muted);flex-shrink:0;">' + ini + '</div>';
-        ph += '<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">' +
-          avHtml +
-          '<div style="flex:1;min-width:0;overflow:hidden;">' +
-            '<div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(u.name||'User') + '</div>' +
-            '<div style="font-size:11px;color:var(--muted);margin-top:2px;">Waiting for approval...</div>' +
-          '</div>' +
-        '</div>';
-      });
-    }
-    if (!ph) ph = '<div class="feed-empty" style="padding:40px 20px;">No pending requests.</div>';
-    pendingEl.innerHTML = ph;
-
-  } catch(e) {
-    contactsEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: ' + e.message + '</div>';
-  }
-}
-
-async function loadNotifications() {
-  var el = document.getElementById('addr-notifs');
-  if (!el || !currentUser) return;
-  el.innerHTML = '<div class="loading-spinner">Loading...</div>';
-  try {
-    // Get recent wows on my posts
-    var myPostsSnap = await getDocs(collection(db, 'posts'));
-    var myPosts = myPostsSnap.docs
-      .filter(function(d) { return d.data().userId === currentUser.uid; })
-      .map(function(d) { return { id: d.id, ...d.data() }; });
-
-    var html = '';
-
-    // Show connection requests first (pending_in)
-    var connSnap = await getDocs(collection(db, 'users', currentUser.uid, 'connections'));
-    var pendingIn = connSnap.docs.filter(function(d) { return d.data().status === 'pending_in'; });
-
-    if (pendingIn.length > 0) {
-      html += '<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Connection Requests</div>';
-      pendingIn.forEach(function(d) {
-        var u = usersCache[d.id] || {};
-        var ini = (u.name||'?').split(' ').map(function(n){return n[0]||'';}).join('').toUpperCase().slice(0,2);
-        var av = u.photoURL ? '<div class="contact-av"><img src="' + u.photoURL + '" alt=""></div>' : '<div class="contact-av">' + ini + '</div>';
-        html += '<div class="contact-item">' + av +
-          '<div class="contact-info"><div class="contact-name">' + escHtml(u.name||'Someone') + '</div>' +
-          '<div class="contact-status waiting">Wants to connect with you</div></div>' +
-          '<div class="contact-actions">' +
-            '<button class="btn-accept" data-uid="' + d.id + '" onclick="acceptConnection(this.dataset.uid)">Accept</button>' +
-            '<button class="btn-decline" data-uid="' + d.id + '" onclick="declineConnection(this.dataset.uid)">Decline</button>' +
-          '</div></div>';
-      });
-    }
-
-    // Show wow activity on my posts
-    var wowActivity = myPosts.filter(function(p) { return (p.wows||0) > 0; });
-    if (wowActivity.length > 0) {
-      html += '<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Recent Wows</div>';
-      wowActivity.slice(0,10).forEach(function(p) {
-        var pX = p.cropX !== undefined ? p.cropX : 50;
-        var pY = p.cropY !== undefined ? p.cropY : 50;
-        var thumb = p.type === 'video'
-          ? '<div style="width:48px;height:27px;border-radius:4px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">▶</div>'
-          : '<img src="' + p.url + '" style="width:48px;height:27px;border-radius:4px;object-fit:cover;object-position:' + pX + '% ' + pY + '%;flex-shrink:0;" alt="">';
-        html += '<div class="contact-item" style="cursor:default;">' + thumb +
-          '<div class="contact-info"><div class="contact-name" style="font-size:12px;">' + escHtml(p.caption||'Your post') + '</div>' +
-          '<div class="contact-status" style="color:var(--wow);">✦ ' + (p.wows||0) + ' Wow' + ((p.wows||0)===1?'':'s') + '</div></div>' +
-        '</div>';
-      });
-    }
-
-    if (!html) {
-      html = '<div class="feed-empty" style="padding:40px 20px;">No activity yet.<br>Post something to get Wows!</div>';
-    }
-    el.innerHTML = html;
-
-    // Update badge
-    var badge = document.getElementById('notifs-badge');
-    if (badge) {
-      if (pendingIn.length > 0) {
-        badge.style.display = 'inline-flex';
-        badge.textContent = pendingIn.length;
-      } else {
-        badge.style.display = 'none';
-      }
-    }
-  } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: ' + e.message + '</div>';
-  }
-}
-
-// ── FORGOT PASSWORD ──
-window.openForgotModal = function() {
-  var emailEl = document.getElementById('auth-email');
-  if (emailEl && emailEl.value) document.getElementById('forgot-email').value = emailEl.value;
-  document.getElementById('forgot-msg').textContent = '';
-  document.getElementById('forgot-modal').style.display = 'flex';
-};
-window.closeForgotModal = function() {
-  document.getElementById('forgot-modal').style.display = 'none';
-};
-window.sendResetEmail = async function() {
-  var email = document.getElementById('forgot-email').value.trim();
-  var msgEl = document.getElementById('forgot-msg');
-  if (!email) { msgEl.style.color='#c0392b'; msgEl.textContent='Please enter your email.'; return; }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    msgEl.style.color='#27ae60';
-    msgEl.textContent='Reset link sent! Check your inbox.';
-    setTimeout(function(){ window.closeForgotModal(); }, 3000);
-  } catch(e) {
-    msgEl.style.color='#c0392b';
-    var em = e.message||'';
-    msgEl.textContent = em.indexOf('user-not-found')>-1 ? 'No account with this email.' :
-      em.indexOf('invalid-email')>-1 ? 'Invalid email.' :
-      em.indexOf('too-many-requests')>-1 ? 'Too many attempts.' : 'Something went wrong.';
-  }
-};
-
-// ── CROP ──
-var _cropX=0,_cropY=0,_cropDrag=false,_cropSX=0,_cropSY=0,_cropW=0,_cropH=0;
-
-function _applyCrop() {
-  var wrap=document.getElementById('crop-wrap'), img=document.getElementById('crop-img');
-  if(!wrap||!img) return;
-  var wW=wrap.clientWidth, wH=wrap.clientHeight;
-  _cropX=Math.min(0,Math.max(wW-_cropW,_cropX));
-  _cropY=Math.min(0,Math.max(wH-_cropH,_cropY));
-  img.style.left=_cropX+'px'; img.style.top=_cropY+'px';
-}
-
-function _getCropPct() {
-  var wrap=document.getElementById('crop-wrap');
-  if(!wrap||_cropW===0) return {x:50,y:50};
-  return { x:Math.round((-_cropX+wrap.clientWidth/2)/_cropW*100), y:Math.round((-_cropY+wrap.clientHeight/2)/_cropH*100) };
-}
-
-document.addEventListener('mousedown',function(e){
-  var w=document.getElementById('crop-wrap');
-  if(!w||!w.classList.contains('active')||!w.contains(e.target))return;
-  _cropDrag=true;_cropSX=e.clientX-_cropX;_cropSY=e.clientY-_cropY;e.preventDefault();
-});
-document.addEventListener('mousemove',function(e){if(!_cropDrag)return;_cropX=e.clientX-_cropSX;_cropY=e.clientY-_cropSY;_applyCrop();});
-document.addEventListener('mouseup',function(){_cropDrag=false;});
-document.addEventListener('touchstart',function(e){
-  var w=document.getElementById('crop-wrap');
-  if(!w||!w.classList.contains('active')||!w.contains(e.target))return;
-  _cropDrag=true;_cropSX=e.touches[0].clientX-_cropX;_cropSY=e.touches[0].clientY-_cropY;
-},{passive:true});
-document.addEventListener('touchmove',function(e){if(!_cropDrag)return;_cropX=e.touches[0].clientX-_cropSX;_cropY=e.touches[0].clientY-_cropSY;_applyCrop();},{passive:true});
-document.addEventListener('touchend',function(){_cropDrag=false;});
-
-window.setFeedTab = function(tab) {
-  feedMode = tab;
-  ['main','connections','explore'].forEach(function(t) {
-    var btn = document.getElementById('ft-' + t);
-    if (btn) btn.classList.toggle('active', t === tab);
-  });
+window.setFeedMode = function(mode) {
+  feedMode = mode;
+  document.getElementById('toggle-connected').classList.toggle('active', mode === 'connected');
+  document.getElementById('toggle-explore').classList.toggle('active', mode === 'explore');
   renderFeed(currentFilter);
 };
 
+// ── FORGOT PASSWORD ──
+;
+
+;
+
+;
+
+window.openForgotModal = function() {
+  var emailEl=document.getElementById('auth-email');
+  if(emailEl&&emailEl.value)document.getElementById('forgot-email').value=emailEl.value;
+  document.getElementById('forgot-msg').textContent='';
+  document.getElementById('forgot-modal').style.display='flex';
+};
+window.closeForgotModal = function() {
+  document.getElementById('forgot-modal').style.display='none';
+};
+window.sendResetEmail = async function() {
+  var email=document.getElementById('forgot-email').value.trim();
+  var msgEl=document.getElementById('forgot-msg');
+  if(!email){msgEl.style.color='#c0392b';msgEl.textContent='Please enter your email.';return;}
+  try {
+    await sendPasswordResetEmail(auth,email);
+    msgEl.style.color='#27ae60';
+    msgEl.textContent='Reset link sent! Check your inbox.';
+    setTimeout(function(){window.closeForgotModal();},3000);
+  } catch(e){
+    msgEl.style.color='#c0392b';
+    var em=e.message||'';
+    msgEl.textContent=em.indexOf('user-not-found')>-1?'No account with this email.':em.indexOf('invalid-email')>-1?'Invalid email.':em.indexOf('too-many-requests')>-1?'Too many attempts.':'Something went wrong.';
+  }
+};
 // ── FEED ──
 function loadFeed() {
   const q = query(collection(db,'posts'), orderBy('createdAt','desc'));
@@ -1074,14 +789,13 @@ function loadFeed() {
 function renderFeed(filter) {
   const feedEl = document.getElementById('feed-container');
   let posts = filter ? allPosts.filter(p=>p.category===filter) : allPosts;
-  if (feedMode === 'connections') {
-    posts = posts.filter(function(p) { return connections.has(p.userId); });
-  } else if (feedMode === 'explore') {
-    posts = posts.filter(function(p) { return !connections.has(p.userId) && p.userId !== currentUser.uid; });
+  if(feedMode==='connections'){posts=posts.filter(function(p){return connections.has(p.userId);});}
+  else if(feedMode==='explore'){posts=posts.filter(function(p){return!connections.has(p.userId)&&p.userId!==currentUser.uid;});}
+  if (feedMode === 'connected') {
+    posts = posts.filter(function(p) { return p.userId === currentUser.uid || connections.has(p.userId); });
   }
-
   if (posts.length === 0) {
-    var msg = feedMode === 'connections' ? 'No posts from connections yet.<br>Tap <b>Explore</b>!' : feedMode === 'explore' ? 'No new people yet!' : 'No posts yet. Be the first! ✦';
+    var msg = feedMode === 'connected' ? 'No posts from connections yet.<br>Switch to <b>Explore</b>!' : 'No posts yet. Be the first! ❆';
     feedEl.innerHTML = '<div class="feed-empty">' + msg + '</div>';
     return;
   }
@@ -1091,16 +805,15 @@ function renderFeed(filter) {
     const avatarHtml = post.userPhoto
       ? `<div class="avatar"><img src="${post.userPhoto}" alt=""></div>`
       : `<div class="avatar">${initials}</div>`;
-    const pX = post.cropX !== undefined ? post.cropX : 50;
-    const pY = post.cropY !== undefined ? post.cropY : 50;
+    const pX=post.cropX!==undefined?post.cropX:50,pY=post.cropY!==undefined?post.cropY:50;
     const mediaHtml = post.type==='video'
       ? `<video src="${post.url}" muted playsinline preload="metadata"></video>`
-      : `<img src="${post.url}" alt="post" loading="lazy" style="object-position:${pX}% ${pY}%;">`;
+      : `<img src="${post.url}" alt="post" loading="lazy" style="object-position:${pX}% ${pY}%;">` ;
     return `<div class="post-card" onclick="openLandscape('${post.id}')">
       <div class="card-header">
         ${avatarHtml}
         <div style="flex:1;"><div class="card-user">${post.userName||'Lorem Ipsum'}</div><div class="card-info">${post.category||'Lorem'} · ${timeAgo(post.createdAt)}</div></div>
-        ${post.userId !== currentUser.uid ? '<button class="connect-btn ' + (connections.has(post.userId) ? 'connected' : '') + '" onclick="toggleConnect(event,\'' + post.userId + '\')">'+  (connections.has(post.userId) ? '🔗' : 'Connect') + '</button>' : ''}
+        ${post.userId !== currentUser.uid ? '<button class="connect-btn ' + (connections.has(post.userId) ? 'connected' : pendingOut.has(post.userId) ? 'waiting' : '') + '" onclick="toggleConnect(event,\'' + post.userId + '\')">'+  (connections.has(post.userId) ? '🔗' : pendingOut.has(post.userId) ? '...' : 'Connect') + '</button>' : ''}
       </div>
       <div class="card-media">
         ${mediaHtml}
@@ -1120,263 +833,6 @@ function renderFeed(filter) {
     </div>`;
   }).join('');
 }
-
-window.setCat = (el, filter) => {
-  document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  currentFilter = filter;
-  renderFeed(filter);
-};
-
-
-// ── WOW ──
-window.wowPost = async (e, postId) => {
-  e.stopPropagation();
-  const btn = e.currentTarget;
-  const span = btn.querySelector('span');
-  const isOn = btn.classList.toggle('on');
-  span.textContent = parseInt(span.textContent)+(isOn?1:-1);
-  if (isOn) wowedPosts.add(postId); else wowedPosts.delete(postId);
-  try { await updateDoc(doc(db,'posts',postId), {wows:increment(isOn?1:-1)}); } catch(e){}
-};
-
-// ── UPLOAD ──
-window.handleFileSelect = function(e) {
-  selectedFiles = Array.from(e.target.files).slice(0,3);
-  if (!selectedFiles.length) return;
-  var file = selectedFiles[0];
-  var url = URL.createObjectURL(file);
-  var zone = document.getElementById('upload-zone');
-  var cropWrap = document.getElementById('crop-wrap');
-  if (file.type.startsWith('video/')) {
-    cropWrap.classList.remove('active');
-    zone.style.display = 'flex';
-    var vid = document.createElement('video');
-    vid.src=url; vid.muted=true; vid.autoplay=true; vid.loop=true; vid.playsInline=true;
-    vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;';
-    zone.innerHTML=''; zone.appendChild(vid);
-  } else {
-    zone.style.display='none';
-    cropWrap.classList.add('active');
-    _cropX=0; _cropY=0;
-    var img = document.getElementById('crop-img');
-    img.onload = function() {
-      var wW=cropWrap.clientWidth, wH=cropWrap.clientHeight;
-      var scale=Math.max(wW/img.naturalWidth, wH/img.naturalHeight);
-      _cropW=img.naturalWidth*scale; _cropH=img.naturalHeight*scale;
-      img.style.width=_cropW+'px'; img.style.height=_cropH+'px';
-      _cropX=(wW-_cropW)/2; _cropY=(wH-_cropH)/2; _applyCrop();
-    };
-    img.src=url;
-  }
-};
-
-window.publishPost = async () => {
-  if (!currentUser || !selectedFiles.length) { showToast('Select a photo or video first'); return; }
-  const caption = document.getElementById('post-caption').value.trim();
-  const category = document.getElementById('post-category').value;
-  const btn = document.getElementById('pub-btn');
-  const progressBar = document.getElementById('progress-bar');
-  const progressFill = document.getElementById('progress-fill');
-  btn.disabled = true; btn.textContent = 'Uploading...';
-  progressBar.style.display = 'block';
-  const statusEl = document.getElementById('upload-status');
-  if (statusEl) statusEl.textContent = 'Uploading...';
-  try {
-    const file = selectedFiles[0];
-    const result = await uploadToCloudinary(file, (pct) => { progressFill.style.width = pct+'%'; });
-    await addDoc(collection(db,'posts'), {
-      url: result.secure_url, caption: caption, category: category,
-      type: file.type.startsWith('video/') ? 'video' : 'photo',
-      cropX: file.type.startsWith('video/') ? 50 : _getCropPct().x,
-      cropY: file.type.startsWith('video/') ? 50 : _getCropPct().y,
-      userId: currentUser.uid,
-      userName: currentUser.displayName || currentUser.email.split('@')[0],
-      userPhoto: currentUser.photoURL || '',
-      wows: 0, createdAt: serverTimestamp()
-    });
-    if (statusEl) statusEl.textContent = '';
-    showToast('Post published! ✦');
-    switchTab('explore');
-    selectedFiles = [];
-    document.getElementById('post-caption').value = '';
-    document.getElementById('upload-zone').innerHTML = `
-      <svg viewBox="0 0 24 24" style="width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:1.2;opacity:0.4;"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
-      <div class="upload-zone-text">Tap to select photos (max 3)<br>or video (max 1 min)</div>`;
-  } catch(err) {
-    if (statusEl) statusEl.textContent = '';
-    showToast('Upload failed — ' + (err.message || 'try again'));
-  }
-  btn.disabled = false; btn.textContent = 'Publish';
-  progressBar.style.display = 'none'; progressFill.style.width = '0%';
-};
-
-// ── LANDSCAPE ──
-window.openLandscape = (postId) => {
-  const byUser = {};
-  allPosts.forEach(p => { if (!byUser[p.userId]) byUser[p.userId]=[]; byUser[p.userId].push(p); });
-  lsPosts = Object.values(byUser);
-  curAccount = lsPosts.findIndex(g=>g.some(p=>p.id===postId));
-  if (curAccount===-1) curAccount=0;
-  curPost = lsPosts[curAccount].findIndex(p=>p.id===postId);
-  if (curPost===-1) curPost=0;
-  buildLsGrid(); updateLsMeta();
-  document.getElementById('landscape-view').classList.add('visible');
-  document.getElementById('portrait-view').classList.add('hidden');
-};
-
-
-window.closeLandscape = () => {
-  // Pause all playing videos
-  document.getElementById('ls-grid').querySelectorAll('video').forEach(v => { v.pause(); });
-  document.getElementById('landscape-view').classList.remove('visible');
-  document.getElementById('portrait-view').classList.remove('hidden');
-};
-
-window.toggleWow = async () => {
-  const group=lsPosts[curAccount]; if(!group||!currentUser) return;
-  const post=group[Math.min(curPost,group.length-1)]; if(!post) return;
-  const isOn=wowedPosts.has(post.id);
-  if(isOn) wowedPosts.delete(post.id); else wowedPosts.add(post.id);
-  post.wows=(post.wows||0)+(isOn?-1:1);
-  updateLsMeta();
-  try { await updateDoc(doc(db,'posts',post.id),{wows:increment(isOn?-1:1)}); } catch(e){}
-};
-
-window.shareCurrentPost = () => showToast('Post shared in Messages ✦');
-
-
-// Share link functions
-window.sharePostLink = function(e, postId) {
-  e.stopPropagation();
-  doShareLink(postId);
-};
-
-window.shareLsPost = function() {
-  var group = lsPosts[curAccount];
-  if (!group) return;
-  var post = group[Math.min(curPost, group.length - 1)];
-  if (!post) return;
-  doShareLink(post.id);
-};
-
-
-let startX=0,startY=0;
-const lv=document.getElementById('landscape-view');
-lv.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;},{passive:true});
-lv.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;
-  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){
-    const g=lsPosts[curAccount];
-    if(dx<0&&curPost<g.length-1)curPost++;
-    else if(dx>0&&curPost>0)curPost--;
-    updateLsMeta();
-  } else if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>40){
-    if(dy<0&&curAccount<lsPosts.length-1){curAccount++;curPost=0;}
-    else if(dy>0&&curAccount>0){curAccount--;curPost=0;}
-    updateLsMeta();
-  }
-},{passive:true});
-
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('landscape-view').classList.contains('visible'))return;
-  const g=lsPosts[curAccount];
-  if(e.key==='ArrowRight'&&g&&curPost<g.length-1){curPost++;updateLsMeta();}
-  if(e.key==='ArrowLeft'&&curPost>0){curPost--;updateLsMeta();}
-  if(e.key==='ArrowDown'&&curAccount<lsPosts.length-1){curAccount++;curPost=0;updateLsMeta();}
-  if(e.key==='ArrowUp'&&curAccount>0){curAccount--;curPost=0;updateLsMeta();}
-  if(e.key==='Escape')closeLandscape();
-});
-
-
-
-window.openChatFromEl = (el) => {
-  openChat(el.dataset.uid, el.dataset.name, el.dataset.initials, el.dataset.photo);
-};
-
-window.openChat = (userId, userName, initials, photoURL) => {
-  currentChatUserId = userId;
-  const chatAvEl = document.getElementById('chat-av-el');
-  chatAvEl.innerHTML = photoURL ? `<img src="${photoURL}" alt="">` : initials;
-  document.getElementById('chat-name').textContent = userName;
-  document.getElementById('chat-view').classList.add('open');
-  loadChatMessages(userId);
-};
-
-
-window.closeChat = () => {
-  document.getElementById('chat-view').classList.remove('open');
-  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
-  currentChatUserId=null;
-};
-
-window.sendMessage = async function() {
-  if (!currentUser || !currentChatUserId) return;
-  var input = document.getElementById('chat-input');
-  var text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  var chatId = getChatId(currentUser.uid, currentChatUserId);
-  try {
-    await setDoc(doc(db,'chats',chatId), { users:[currentUser.uid,currentChatUserId], updatedAt:serverTimestamp() }, { merge:true });
-    await addDoc(collection(db,'chats',chatId,'messages'), {
-      text: text, type:'text', senderId:currentUser.uid,
-      senderName: currentUser.displayName || currentUser.email.split('@')[0],
-      createdAt: serverTimestamp()
-    });
-  } catch(e) { showToast('Could not send: '+e.message); }
-};
-
-window.sendVoiceNote = async function() {
-  if (!currentUser || !currentChatUserId) return;
-  var dur = '0:'+String(Math.floor(Math.random()*9+5)).padStart(2,'0');
-  var chatId = getChatId(currentUser.uid, currentChatUserId);
-  try {
-    await setDoc(doc(db,'chats',chatId), { users:[currentUser.uid,currentChatUserId], updatedAt:serverTimestamp() }, { merge:true });
-    await addDoc(collection(db,'chats',chatId,'messages'), {
-      type:'voice', duration:dur, senderId:currentUser.uid,
-      senderName: currentUser.displayName || currentUser.email.split('@')[0],
-      createdAt: serverTimestamp()
-    });
-  } catch(e) { showToast('Could not send voice note'); }
-};
-
-
-// ── PROFILE GRID ──
-
-
-// ── NAV ──
-window.switchTab = function(name) {
-  ['explore','news','messages','upload','profile'].forEach(function(t) {
-    var s = document.getElementById('screen-'+t);
-    if (s) { s.style.display='none'; s.classList.remove('show'); }
-    var nb = document.getElementById('nb-'+t);
-    if (nb) nb.classList.remove('active');
-  });
-  var s = document.getElementById('screen-'+name);
-  if (s) {
-    if (name==='explore' || name==='news') s.style.display='flex';
-    else { s.style.display='flex'; s.classList.add('show'); }
-  }
-  var nb = document.getElementById('nb-'+name);
-  if (nb) nb.classList.add('active');
-  if (name==='messages') loadAddressBook();
-  if (name==='news') loadNewsTab();
-  if (name==='profile') loadProfileGrid();
-};;
-
-
-window.showToast = (msg) => {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-};
-
-window.showToast = (msg) => {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-};
 
 window.setCat = (el, filter) => {
   document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
@@ -1409,30 +865,18 @@ window.wowPost = async (e, postId) => {
 // ── UPLOAD ──
 window.handleFileSelect = function(e) {
   selectedFiles = Array.from(e.target.files).slice(0,3);
-  if (!selectedFiles.length) return;
-  var file = selectedFiles[0];
-  var url = URL.createObjectURL(file);
-  var zone = document.getElementById('upload-zone');
-  var cropWrap = document.getElementById('crop-wrap');
-  if (file.type.startsWith('video/')) {
-    cropWrap.classList.remove('active');
-    zone.style.display = 'flex';
-    var vid = document.createElement('video');
-    vid.src=url; vid.muted=true; vid.autoplay=true; vid.loop=true; vid.playsInline=true;
-    vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;';
-    zone.innerHTML=''; zone.appendChild(vid);
+  if(!selectedFiles.length)return;
+  var file=selectedFiles[0],url=URL.createObjectURL(file);
+  var zone=document.getElementById('upload-zone'),cropWrap=document.getElementById('crop-wrap');
+  if(!cropWrap){zone.style.display='flex';if(file.type.startsWith('video/')){zone.innerHTML='<video src="'+url+'" muted autoplay loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;"></video>';}else{zone.innerHTML='<img src="'+url+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;" alt="">';}}
+  else if(file.type.startsWith('video/')){
+    cropWrap.classList.remove('active');zone.style.display='flex';
+    var vid=document.createElement('video');vid.src=url;vid.muted=true;vid.autoplay=true;vid.loop=true;vid.playsInline=true;vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;';
+    zone.innerHTML='';zone.appendChild(vid);
   } else {
-    zone.style.display='none';
-    cropWrap.classList.add('active');
-    _cropX=0; _cropY=0;
-    var img = document.getElementById('crop-img');
-    img.onload = function() {
-      var wW=cropWrap.clientWidth, wH=cropWrap.clientHeight;
-      var scale=Math.max(wW/img.naturalWidth, wH/img.naturalHeight);
-      _cropW=img.naturalWidth*scale; _cropH=img.naturalHeight*scale;
-      img.style.width=_cropW+'px'; img.style.height=_cropH+'px';
-      _cropX=(wW-_cropW)/2; _cropY=(wH-_cropH)/2; _applyCrop();
-    };
+    zone.style.display='none';cropWrap.classList.add('active');_cropX=0;_cropY=0;
+    var img=document.getElementById('crop-img');
+    img.onload=function(){var wW=cropWrap.clientWidth,wH=cropWrap.clientHeight;var scale=Math.max(wW/img.naturalWidth,wH/img.naturalHeight);_cropW=img.naturalWidth*scale;_cropH=img.naturalHeight*scale;img.style.width=_cropW+'px';img.style.height=_cropH+'px';_cropX=(wW-_cropW)/2;_cropY=(wH-_cropH)/2;_applyCrop();};
     img.src=url;
   }
 };
@@ -1452,14 +896,14 @@ window.publishPost = async () => {
     const file = selectedFiles[0];
     const result = await uploadToCloudinary(file, (pct) => { progressFill.style.width = pct+'%'; });
     await addDoc(collection(db,'posts'), {
-      url: result.secure_url, caption: caption, category: category,
-      type: file.type.startsWith('video/') ? 'video' : 'photo',
-      cropX: file.type.startsWith('video/') ? 50 : _getCropPct().x,
-      cropY: file.type.startsWith('video/') ? 50 : _getCropPct().y,
-      userId: currentUser.uid,
-      userName: currentUser.displayName || currentUser.email.split('@')[0],
-      userPhoto: currentUser.photoURL || '',
-      wows: 0, createdAt: serverTimestamp()
+      url:result.secure_url, caption:caption, category:category,
+      type:file.type.startsWith('video/')?'video':'photo',
+      cropX:file.type.startsWith('video/')?50:_getCropPct().x,
+      cropY:file.type.startsWith('video/')?50:_getCropPct().y,
+      userId:currentUser.uid,
+      userName:currentUser.displayName||currentUser.email.split('@')[0],
+      userPhoto:currentUser.photoURL||'',
+      wows:0, createdAt:serverTimestamp()
     });
     if (statusEl) statusEl.textContent = '';
     showToast('Post published! ✦');
@@ -1620,9 +1064,36 @@ function fallbackCopy(text) {
   try { document.execCommand('copy'); showToast('Link copied!'); } catch(err) {}
   document.body.removeChild(el);
 }
-window.openChatFromEl = (el) => {
-  openChat(el.dataset.uid, el.dataset.name, el.dataset.initials, el.dataset.photo);
-};
+
+let startX=0,startY=0;
+const lv=document.getElementById('landscape-view');
+lv.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;},{passive:true});
+lv.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){
+    const g=lsPosts[curAccount];
+    if(dx<0&&curPost<g.length-1)curPost++;
+    else if(dx>0&&curPost>0)curPost--;
+    updateLsMeta();
+  } else if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>40){
+    if(dy<0&&curAccount<lsPosts.length-1){curAccount++;curPost=0;}
+    else if(dy>0&&curAccount>0){curAccount--;curPost=0;}
+    updateLsMeta();
+  }
+},{passive:true});
+
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('landscape-view').classList.contains('visible'))return;
+  const g=lsPosts[curAccount];
+  if(e.key==='ArrowRight'&&g&&curPost<g.length-1){curPost++;updateLsMeta();}
+  if(e.key==='ArrowLeft'&&curPost>0){curPost--;updateLsMeta();}
+  if(e.key==='ArrowDown'&&curAccount<lsPosts.length-1){curAccount++;curPost=0;updateLsMeta();}
+  if(e.key==='ArrowUp'&&curAccount>0){curAccount--;curPost=0;updateLsMeta();}
+  if(e.key==='Escape')closeLandscape();
+});
+
+// ── MESSAGES ──
+;
 
 window.openChat = (userId, userName, initials, photoURL) => {
   currentChatUserId = userId;
@@ -1636,40 +1107,18 @@ window.openChat = (userId, userName, initials, photoURL) => {
 function getChatId(a,b){ return [a,b].sort().join('_'); }
 
 function loadChatMessages(userId) {
-  if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe=null; }
-  var chatId = getChatId(currentUser.uid, userId);
-  var msgsEl = document.getElementById('chat-messages');
-  msgsEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:rgba(0,0,0,0.38);">Loading...</div>';
-  try {
-    var q = query(collection(db,'chats',chatId,'messages'), orderBy('createdAt','asc'));
-    chatUnsubscribe = onSnapshot(q, function(snap) {
-      if (snap.empty) {
-        msgsEl.innerHTML = '<div style="text-align:center;padding:40px 20px;font-size:12px;color:rgba(0,0,0,0.38);font-style:italic;">No messages yet. Say hello!</div>';
-        return;
-      }
-      msgsEl.innerHTML = snap.docs.map(function(d) {
-        var m=d.data(), isOut=m.senderId===currentUser.uid;
-        var who=isOut?'You':(m.senderName||'them'), when=timeAgo(m.createdAt);
-        if (m.type==='voice') {
-          return '<div class="msg-row '+(isOut?'out':'in')+'">' +
-            '<div class="voice-bubble">' +
-              '<button class="voice-play">▶</button>' +
-              '<div class="voice-wave">'+makeWaveBars(isOut?'out':'in')+'</div>' +
-              '<span class="voice-dur">'+(m.duration||'0:10')+'</span>' +
-            '</div>' +
-            '<span class="bubble-time">'+who+' · '+when+'</span></div>';
-        }
-        return '<div class="msg-row '+(isOut?'out':'in')+'">' +
-          '<div class="bubble">'+escHtml(m.text||'')+'</div>' +
-          '<span class="bubble-time">'+who+' · '+when+'</span></div>';
-      }).join('');
-      msgsEl.scrollTop = msgsEl.scrollHeight;
-    }, function(err) {
-      msgsEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Could not load messages.</div>';
-    });
-  } catch(e) {
-    msgsEl.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: '+e.message+'</div>';
-  }
+  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+  var chatId=getChatId(currentUser.uid,userId);
+  var msgsEl=document.getElementById('chat-messages');
+  msgsEl.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:rgba(0,0,0,0.38);">Loading...</div>';
+  try{
+    var q=query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc'));
+    chatUnsubscribe=onSnapshot(q,function(snap){
+      if(snap.empty){msgsEl.innerHTML='<div style="text-align:center;padding:40px 20px;font-size:12px;color:rgba(0,0,0,0.38);font-style:italic;">No messages yet. Say hello!</div>';return;}
+      msgsEl.innerHTML=snap.docs.map(function(d){var m=d.data(),isOut=m.senderId===currentUser.uid;var who=isOut?'You':(m.senderName||'them'),when=timeAgo(m.createdAt);if(m.type==='voice'){return'<div class="msg-row '+(isOut?'out':'in')+'"><div class="voice-bubble"><button class="voice-play">&#9654;</button><div class="voice-wave">'+makeWaveBars(isOut?'out':'in')+'</div><span class="voice-dur">'+(m.duration||'0:10')+'</span></div><span class="bubble-time">'+who+' &middot; '+when+'</span></div>';}return'<div class="msg-row '+(isOut?'out':'in')+'"><div class="bubble">'+escHtml(m.text||'')+'</div><span class="bubble-time">'+who+' &middot; '+when+'</span></div>';}).join('');
+      msgsEl.scrollTop=msgsEl.scrollHeight;
+    },function(err){msgsEl.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Could not load messages.</div>';});
+  }catch(e){msgsEl.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: '+e.message+'</div>';}
 }
 
 window.closeChat = () => {
@@ -1679,34 +1128,22 @@ window.closeChat = () => {
 };
 
 window.sendMessage = async function() {
-  if (!currentUser || !currentChatUserId) return;
-  var input = document.getElementById('chat-input');
-  var text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  var chatId = getChatId(currentUser.uid, currentChatUserId);
-  try {
-    await setDoc(doc(db,'chats',chatId), { users:[currentUser.uid,currentChatUserId], updatedAt:serverTimestamp() }, { merge:true });
-    await addDoc(collection(db,'chats',chatId,'messages'), {
-      text: text, type:'text', senderId:currentUser.uid,
-      senderName: currentUser.displayName || currentUser.email.split('@')[0],
-      createdAt: serverTimestamp()
-    });
-  } catch(e) { showToast('Could not send: '+e.message); }
+  if(!currentUser||!currentChatUserId)return;
+  var input=document.getElementById('chat-input'),text=input.value.trim();
+  if(!text)return;input.value='';
+  var chatId=getChatId(currentUser.uid,currentChatUserId);
+  try{await setDoc(doc(db,'chats',chatId),{users:[currentUser.uid,currentChatUserId],updatedAt:serverTimestamp()},{merge:true});await addDoc(collection(db,'chats',chatId,'messages'),{text:text,type:'text',senderId:currentUser.uid,senderName:currentUser.displayName||currentUser.email.split('@')[0],createdAt:serverTimestamp()});}
+  catch(e){showToast('Could not send: '+e.message);}
 };
 
-window.sendVoiceNote = async function() {
-  if (!currentUser || !currentChatUserId) return;
-  var dur = '0:'+String(Math.floor(Math.random()*9+5)).padStart(2,'0');
-  var chatId = getChatId(currentUser.uid, currentChatUserId);
+window.sendVoiceNote = async () => {
+  if(!currentUser||!currentChatUserId) return;
+  const dur='0:'+String(Math.floor(Math.random()*9+5)).padStart(2,'0');
+  const chatId=getChatId(currentUser.uid,currentChatUserId);
   try {
-    await setDoc(doc(db,'chats',chatId), { users:[currentUser.uid,currentChatUserId], updatedAt:serverTimestamp() }, { merge:true });
-    await addDoc(collection(db,'chats',chatId,'messages'), {
-      type:'voice', duration:dur, senderId:currentUser.uid,
-      senderName: currentUser.displayName || currentUser.email.split('@')[0],
-      createdAt: serverTimestamp()
-    });
-  } catch(e) { showToast('Could not send voice note'); }
+    await setDoc(doc(db,'chats',chatId),{users:[currentUser.uid,currentChatUserId]},{merge:true});
+    await addDoc(collection(db,'chats',chatId,'messages'),{type:'voice',duration:dur,senderId:currentUser.uid,createdAt:serverTimestamp()});
+  } catch(e){}
 };
 
 function makeWaveBars(dir){
@@ -1731,86 +1168,170 @@ function loadProfileGrid() {
 
 // ── NAV ──
 window.switchTab = function(name) {
-  ['explore','news','messages','upload','profile'].forEach(function(t) {
-    var s = document.getElementById('screen-'+t);
-    if (s) { s.style.display='none'; s.classList.remove('show'); }
-    var nb = document.getElementById('nb-'+t);
-    if (nb) nb.classList.remove('active');
+  ['explore','news','messages','upload','profile'].forEach(function(t){
+    const s=document.getElementById('screen-'+t);
+    s.style.display='none'; s.classList.remove('show');
+    document.getElementById('nb-'+t)?.classList.remove('active');
   });
-  var s = document.getElementById('screen-'+name);
-  if (s) {
-    if (name==='explore' || name==='news') s.style.display='flex';
-    else { s.style.display='flex'; s.classList.add('show'); }
-  }
-  var nb = document.getElementById('nb-'+name);
-  if (nb) nb.classList.add('active');
-  if (name==='messages') loadAddressBook();
-  if (name==='news') loadNewsTab();
-  if (name==='profile') loadProfileGrid();
-};;
+  const s=document.getElementById('screen-'+name);
+  if(name==='explore'||name==='news') s.style.display='flex';
+  else { s.style.display='flex'; s.classList.add('show'); }
+  document.getElementById('nb-'+name)?.classList.add('active');
+  if(name==='messages') loadAddressBook();
+  if(name==='news') loadNewsTab();
+  if(name==='profile') loadProfileGrid();
+};
 
-async function loadNewsTab() {
-  var el = document.getElementById('news-content');
-  if (!el || !currentUser) return;
-  el.innerHTML = '<div class="loading-spinner">Loading...</div>';
-  try {
-    var connSnap = await getDocs(collection(db,'users',currentUser.uid,'connections'));
-    var pendingIn = connSnap.docs.filter(function(d){ return d.data().status==='pending_in'; });
-    var allSnap = await getDocs(collection(db,'users'));
-    allSnap.docs.forEach(function(d){ usersCache[d.id]={id:d.id,name:d.data().name,photoURL:d.data().photoURL}; });
-    var postsSnap = await getDocs(collection(db,'posts'));
-    var myPosts = postsSnap.docs
-      .filter(function(d){ return d.data().userId===currentUser.uid && (d.data().wows||0)>0; })
-      .map(function(d){ return {id:d.id,...d.data()}; })
-      .sort(function(a,b){ return (b.wows||0)-(a.wows||0); }).slice(0,8);
-    var html = '';
-    if (pendingIn.length > 0) {
-      html += '<div style="padding:12px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);">Connection Requests</div>';
-      pendingIn.forEach(function(d) {
-        var u = usersCache[d.id]||{};
-        var ini = (u.name||'?').split(' ').map(function(n){return n[0]||'';}).join('').toUpperCase().slice(0,2);
-        var av = u.photoURL
-          ? '<div style="width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;min-width:42px;"><img src="'+u.photoURL+'" style="width:100%;height:100%;object-fit:cover;" alt=""></div>'
-          : '<div style="width:42px;height:42px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--muted);flex-shrink:0;min-width:42px;">'+ini+'</div>';
-        html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">'+av+
-          '<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+escHtml(u.name||'Someone')+'</div>'+
-          '<div style="font-size:11px;color:#e67e22;margin-top:2px;">Wants to connect with you</div></div>'+
-          '<div style="display:flex;gap:6px;flex-shrink:0;">'+
-            '<button style="padding:5px 12px;border-radius:99px;font-size:11px;font-family:var(--font-body);background:var(--text);color:#fff;border:none;cursor:pointer;" data-uid="'+d.id+'" onclick="acceptConnection(this.dataset.uid)">Accept</button>'+
-            '<button style="padding:5px 12px;border-radius:99px;font-size:11px;font-family:var(--font-body);background:transparent;color:var(--muted);border:0.5px solid var(--border-md);cursor:pointer;" data-uid="'+d.id+'" onclick="declineConnection(this.dataset.uid)">Decline</button>'+
-          '</div></div>';
-      });
-    }
-    if (myPosts.length > 0) {
-      html += '<div style="padding:12px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);">Wow Activity</div>';
-      myPosts.forEach(function(p) {
-        var pX=p.cropX!==undefined?p.cropX:50, pY=p.cropY!==undefined?p.cropY:50;
-        var thumb = p.type==='video'
-          ? '<div style="width:56px;height:32px;border-radius:6px;background:#111;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff;">&#9654;</div>'
-          : '<img src="'+p.url+'" style="width:56px;height:32px;border-radius:6px;object-fit:cover;object-position:'+pX+'% '+pY+'%;flex-shrink:0;" alt="">';
-        html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">'+thumb+
-          '<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+escHtml(p.caption||'Your post')+'</div>'+
-          '<div style="font-size:11px;color:var(--wow);margin-top:2px;">&#10022; '+(p.wows||0)+' Wow'+((p.wows||0)===1?'':'s')+'</div></div></div>';
-      });
-    }
-    if (!html) html = '<div style="text-align:center;padding:60px 20px;font-size:13px;color:var(--muted);font-style:italic;line-height:2;">No activity yet.<br>Post something to get Wows!</div>';
-    el.innerHTML = html;
-    var badge = document.getElementById('news-nav-badge');
-    if (badge) { badge.style.display=pendingIn.length>0?'inline-flex':'none'; if(pendingIn.length>0) badge.textContent=pendingIn.length; }
-  } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: '+e.message+'</div>';
-  }
+
+// ── UTILS ──
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-window.showToast = (msg) => {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+// ── FEED TABS ──
+window.setFeedTab = function(tab) {
+  feedMode = tab;
+  ['main','connections','explore'].forEach(function(t) {
+    var btn=document.getElementById('ft-'+t);
+    if(btn) btn.classList.toggle('active', t===tab);
+  });
+  renderFeed(currentFilter);
 };
+
+// ── ADDRESS BOOK ──
+window.switchAddrTab = function(tab) {
+  ['contacts','pending','notifs'].forEach(function(t) {
+    var btn=document.getElementById('addr-tab-'+t);
+    var el=document.getElementById('addr-'+t);
+    if(btn) btn.classList.toggle('active', t===tab);
+    if(el) el.style.display = t===tab ? 'block' : 'none';
+  });
+};
+
+async function loadAddressBook() {
+  if(!currentUser) return;
+  var contactsEl=document.getElementById('addr-contacts');
+  var pendingEl=document.getElementById('addr-pending');
+  var badge=document.getElementById('pending-badge');
+  if(!contactsEl) return;
+  contactsEl.innerHTML='<div class="loading-spinner">Loading...</div>';
+  try {
+    var snap=await getDocs(collection(db,'users',currentUser.uid,'connections'));
+    var allSnap=await getDocs(collection(db,'users'));
+    allSnap.docs.forEach(function(d){usersCache[d.id]={id:d.id,name:d.data().name,photoURL:d.data().photoURL};});
+    var connected=[],pendingIn=[],pendingOutList=[];
+    snap.docs.forEach(function(d){
+      var uid=d.id,status=d.data().status,u=usersCache[uid];
+      if(!u)return;
+      if(status==='connected'){connections.add(uid);connected.push(u);}
+      else if(status==='pending_in')pendingIn.push(u);
+      else if(status==='pending_out'){pendingOut.add(uid);pendingOutList.push(u);}
+    });
+    if(badge){badge.style.display=pendingIn.length>0?'inline-flex':'none';if(pendingIn.length>0)badge.textContent=pendingIn.length;}
+    document.getElementById('prof-msgs').textContent=connected.length;
+    function getIni(u){return(u.name||'?').split(' ').map(function(n){return n[0]||'';}).join('').toUpperCase().slice(0,2);}
+    function makeAv(u,ini){return u.photoURL?'<div style="width:44px;height:44px;min-width:44px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="'+u.photoURL+'" style="width:44px;height:44px;object-fit:cover;border-radius:50%;display:block;" alt=""></div>':'<div style="width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--muted);flex-shrink:0;">'+ini+'</div>';}
+    if(connected.length===0){
+      contactsEl.innerHTML='<div class="feed-empty" style="padding:40px 20px;">No connections yet.<br>Tap a post and Connect!</div>';
+    } else {
+      var html='';
+      connected.forEach(function(u){
+        var ini=getIni(u);
+        html+='<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;" data-uid="'+u.id+'" data-name="'+escHtml(u.name||'User')+'" data-initials="'+ini+'" data-photo="'+(u.photoURL||'')+'" onclick="openChatFromEl(this)">'+makeAv(u,ini)+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(u.name||'User')+'</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Tap to message ›</div></div></div>';
+      });
+      contactsEl.innerHTML=html;
+    }
+    var ph='';
+    if(pendingIn.length>0){
+      ph+='<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Requests received</div>';
+      pendingIn.forEach(function(u){var ini=getIni(u);ph+='<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);">'+makeAv(u,ini)+'<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:14px;font-weight:500;">'+escHtml(u.name||'User')+'</div><div style="font-size:11px;color:#e67e22;margin-top:2px;">Wants to connect</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button style="padding:6px 14px;border-radius:99px;font-size:12px;font-family:var(--font-body);background:var(--text);color:#fff;border:none;cursor:pointer;" data-uid="'+u.id+'" onclick="acceptConnection(this.dataset.uid)">Accept</button><button style="padding:6px 14px;border-radius:99px;font-size:12px;font-family:var(--font-body);background:transparent;color:var(--muted);border:0.5px solid var(--border-md);cursor:pointer;" data-uid="'+u.id+'" onclick="declineConnection(this.dataset.uid)">Decline</button></div></div>';});
+    }
+    if(pendingOutList.length>0){
+      ph+='<div style="padding:10px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;">Requests sent</div>';
+      pendingOutList.forEach(function(u){var ini=getIni(u);ph+='<div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:0.5px solid var(--border);">'+makeAv(u,ini)+'<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:14px;font-weight:500;">'+escHtml(u.name||'User')+'</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Waiting...</div></div></div>';});
+    }
+    if(!ph)ph='<div class="feed-empty" style="padding:40px 20px;">No pending requests.</div>';
+    pendingEl.innerHTML=ph;
+  } catch(e){contactsEl.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: '+e.message+'</div>';}
+}
+
+window.acceptConnection = async function(userId) {
+  try {
+    await updateDoc(doc(db,'users',currentUser.uid,'connections',userId),{status:'connected',connectedAt:serverTimestamp()});
+    await updateDoc(doc(db,'users',userId,'connections',currentUser.uid),{status:'connected',connectedAt:serverTimestamp()});
+    connections.add(userId);
+  } catch(e){showToast('Error: '+e.message);return;}
+  showToast('Connected! 🔗');
+  loadAddressBook();
+  renderFeed(currentFilter);
+};
+
+window.declineConnection = async function(userId) {
+  try {
+    await updateDoc(doc(db,'users',currentUser.uid,'connections',userId),{status:'declined'});
+    await updateDoc(doc(db,'users',userId,'connections',currentUser.uid),{status:'declined'});
+  } catch(e){}
+  showToast('Connection declined');
+  loadAddressBook();
+};
+
+window.openChatFromEl = function(el) {
+  openChat(el.dataset.uid, el.dataset.name, el.dataset.initials, el.dataset.photo);
+};
+
+// ── NEWS TAB ──
+async function loadNewsTab() {
+  var el=document.getElementById('news-content');
+  if(!el||!currentUser)return;
+  el.innerHTML='<div class="loading-spinner">Loading...</div>';
+  try {
+    var connSnap=await getDocs(collection(db,'users',currentUser.uid,'connections'));
+    var pendingIn=connSnap.docs.filter(function(d){return d.data().status==='pending_in';});
+    var allSnap=await getDocs(collection(db,'users'));
+    allSnap.docs.forEach(function(d){usersCache[d.id]={id:d.id,name:d.data().name,photoURL:d.data().photoURL};});
+    var postsSnap=await getDocs(collection(db,'posts'));
+    var myPosts=postsSnap.docs.filter(function(d){return d.data().userId===currentUser.uid&&(d.data().wows||0)>0;}).map(function(d){return{id:d.id,...d.data()};}).sort(function(a,b){return(b.wows||0)-(a.wows||0);}).slice(0,8);
+    var html='';
+    if(pendingIn.length>0){
+      html+='<div style="padding:12px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);">Connection Requests</div>';
+      pendingIn.forEach(function(d){
+        var u=usersCache[d.id]||{};
+        var ini=(u.name||'?').split(' ').map(function(n){return n[0]||'';}).join('').toUpperCase().slice(0,2);
+        var av=u.photoURL?'<div style="width:42px;height:42px;min-width:42px;border-radius:50%;overflow:hidden;flex-shrink:0;"><img src="'+u.photoURL+'" style="width:100%;height:100%;object-fit:cover;" alt=""></div>':'<div style="width:42px;height:42px;min-width:42px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--muted);flex-shrink:0;">'+ini+'</div>';
+        html+='<div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">'+av+'<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+escHtml(u.name||'Someone')+'</div><div style="font-size:11px;color:#e67e22;margin-top:2px;">Wants to connect</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button style="padding:5px 12px;border-radius:99px;font-size:11px;font-family:var(--font-body);background:var(--text);color:#fff;border:none;cursor:pointer;" data-uid="'+d.id+'" onclick="acceptConnection(this.dataset.uid)">Accept</button><button style="padding:5px 12px;border-radius:99px;font-size:11px;font-family:var(--font-body);background:transparent;color:var(--muted);border:0.5px solid var(--border-md);cursor:pointer;" data-uid="'+d.id+'" onclick="declineConnection(this.dataset.uid)">Decline</button></div></div>';
+      });
+    }
+    if(myPosts.length>0){
+      html+='<div style="padding:12px 20px 4px;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;background:var(--surface);">Wow Activity</div>';
+      myPosts.forEach(function(p){
+        var pX=p.cropX!==undefined?p.cropX:50,pY=p.cropY!==undefined?p.cropY:50;
+        var thumb=p.type==='video'?'<div style="width:56px;height:32px;border-radius:6px;background:#111;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff;">&#9654;</div>':'<img src="'+p.url+'" style="width:56px;height:32px;border-radius:6px;object-fit:cover;object-position:'+pX+'% '+pY+'%;flex-shrink:0;" alt="">';
+        html+='<div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:0.5px solid var(--border);overflow:hidden;">'+thumb+'<div style="flex:1;min-width:0;overflow:hidden;"><div style="font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+escHtml(p.caption||'Your post')+'</div><div style="font-size:11px;color:var(--wow);margin-top:2px;">&#10022; '+(p.wows||0)+' Wow'+((p.wows||0)===1?'':'s')+'</div></div></div>';
+      });
+    }
+    if(!html)html='<div style="text-align:center;padding:60px 20px;font-size:13px;color:var(--muted);font-style:italic;line-height:2;">No activity yet.<br>Post something to get Wows!</div>';
+    el.innerHTML=html;
+    var badge=document.getElementById('news-nav-badge');
+    if(badge){badge.style.display=pendingIn.length>0?'inline-flex':'none';if(pendingIn.length>0)badge.textContent=pendingIn.length;}
+  } catch(e){el.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:#c0392b;">Error: '+e.message+'</div>';}
+}
+
+// ── CROP ──
+var _cropX=0,_cropY=0,_cropDrag=false,_cropSX=0,_cropSY=0,_cropW=0,_cropH=0;
+function _applyCrop(){var wrap=document.getElementById('crop-wrap'),img=document.getElementById('crop-img');if(!wrap||!img)return;var wW=wrap.clientWidth,wH=wrap.clientHeight;_cropX=Math.min(0,Math.max(wW-_cropW,_cropX));_cropY=Math.min(0,Math.max(wH-_cropH,_cropY));img.style.left=_cropX+'px';img.style.top=_cropY+'px';}
+function _getCropPct(){var wrap=document.getElementById('crop-wrap');if(!wrap||_cropW===0)return{x:50,y:50};return{x:Math.round((-_cropX+wrap.clientWidth/2)/_cropW*100),y:Math.round((-_cropY+wrap.clientHeight/2)/_cropH*100)};}
+document.addEventListener('mousedown',function(e){var w=document.getElementById('crop-wrap');if(!w||!w.classList.contains('active')||!w.contains(e.target))return;_cropDrag=true;_cropSX=e.clientX-_cropX;_cropSY=e.clientY-_cropY;e.preventDefault();});
+document.addEventListener('mousemove',function(e){if(!_cropDrag)return;_cropX=e.clientX-_cropSX;_cropY=e.clientY-_cropSY;_applyCrop();});
+document.addEventListener('mouseup',function(){_cropDrag=false;});
+document.addEventListener('touchstart',function(e){var w=document.getElementById('crop-wrap');if(!w||!w.classList.contains('active')||!w.contains(e.target))return;_cropDrag=true;_cropSX=e.touches[0].clientX-_cropX;_cropSY=e.touches[0].clientY-_cropY;},{passive:true});
+document.addEventListener('touchmove',function(e){if(!_cropDrag)return;_cropX=e.touches[0].clientX-_cropSX;_cropY=e.touches[0].clientY-_cropSY;_applyCrop();},{passive:true});
+document.addEventListener('touchend',function(){_cropDrag=false;});
 
 window.showToast = (msg) => {
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 };
-
+</script>
+</body>
+</html>
