@@ -241,7 +241,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); font-family:
 </div>
 
 <!-- FORGOT PASSWORD MODAL -->
-<div id="forgot-modal">
+<div id="forgot-modal" style="display:none">
   <div class="forgot-box">
     <div class="forgot-title">Reset password</div>
     <div class="forgot-sub">We'll send a reset link to your email.</div>
@@ -339,7 +339,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); font-family:
     <div class="prof-area">
       <div class="prof-header">
         <div class="prof-pic" id="prof-pic" onclick="document.getElementById('prof-pic-input').click()">
-          <span id="prof-initials">?</span>
+          
         </div>
         <input type="file" id="prof-pic-input" accept="image/*" style="display:none" onchange="updateProfilePic(event)">
         <div>
