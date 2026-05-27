@@ -312,10 +312,7 @@
 
   <!-- EXPLORE -->
   <div id="screen-explore" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
-    <div class="feed-toggle">
-      <button class="feed-toggle-btn active" id="toggle-connected" onclick="setFeedMode('connected')">Connected</button>
-      <button class="feed-toggle-btn" id="toggle-explore" onclick="setFeedMode('explore')">Explore</button>
-    </div>
+
     <div class="feed-tabs">
       <button class="feed-tab active" id="ft-main" onclick="setFeedTab('main')">Main</button>
       <button class="feed-tab" id="ft-connections" onclick="setFeedTab('connections')">My Connections</button>
@@ -474,6 +471,8 @@
 </div>
 
 <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://ww
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -737,12 +736,7 @@ function updateLsConnectBtn() {
   else { btn.textContent='Connect'; btn.className='ls-connect-btn'; }
 }
 
-window.setFeedMode = function(mode) {
-  feedMode = mode;
-  document.getElementById('toggle-connected').classList.toggle('active', mode === 'connected');
-  document.getElementById('toggle-explore').classList.toggle('active', mode === 'explore');
-  renderFeed(currentFilter);
-};
+window.setFeedMode = function(mode) { feedMode = mode; renderFeed(currentFilter); };
 
 // ── FORGOT PASSWORD ──
 ;
@@ -1332,6 +1326,3 @@ window.showToast = (msg) => {
   t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 };
-</script>
-</body>
-</html>
