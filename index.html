@@ -434,6 +434,28 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); font-family:
   <div id="ls-tap-hint" style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.5);color:rgba(255,255,255,0.6);font-size:10px;padding:6px 16px;border-radius:99px;letter-spacing:1px;text-transform:uppercase;pointer-events:none;opacity:1;transition:opacity 0.5s;">Tap to show controls</div>
 </div>
 
+
+<!-- CHAT -->
+<div class="chat-screen" id="chat-screen">
+  <div class="chat-header">
+    <button class="chat-back" onclick="closeChat()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="chat-av" id="chat-av"></div>
+    <div class="chat-name" id="chat-name">Lorem Ipsum</div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="chat-voice-btn" onclick="sendVoiceNote()">
+      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </button>
+    <button class="chat-send-btn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -534,18 +556,28 @@ function renderLsGrid() {
 
 function checkOrientation() {
   var isPortrait = window.innerHeight > window.innerWidth;
-  document.getElementById('portrait-view').classList.toggle('hidden', !isPortrait);
   var gv = document.getElementById('ls-grid-view');
-  if (currentUser) {
-    if (isPortrait) {
-      document.getElementById('app').style.display = 'flex';
-      if (gv) gv.style.display = 'none';
-      var lv2 = document.getElementById('landscape-view');
-      if (lv2 && lv2.classList.contains('open')) closeLandscape();
-    } else {
-      document.getElementById('app').style.display = 'none';
-      if (gv) { gv.style.display = 'flex'; renderLsGrid(); }
-    }
+  var pv = document.getElementById('portrait-view');
+  
+  if (!currentUser) {
+    // Not logged in: always hide portrait warning, auth works in both orientations
+    if (pv) pv.classList.add('hidden');
+    return;
+  }
+  
+  // Logged in
+  if (isPortrait) {
+    // Show portrait rotation prompt
+    if (pv) pv.classList.remove('hidden');
+    document.getElementById('app').style.display = 'none';
+    if (gv) gv.style.display = 'none';
+    var lv2 = document.getElementById('landscape-view');
+    if (lv2 && lv2.classList.contains('open')) closeLandscape();
+  } else {
+    // Landscape: hide rotation prompt, show grid
+    if (pv) pv.classList.add('hidden');
+    document.getElementById('app').style.display = 'none';
+    if (gv) { gv.style.display = 'flex'; renderLsGrid(); }
   }
 }
 window.addEventListener('resize', checkOrientation);
