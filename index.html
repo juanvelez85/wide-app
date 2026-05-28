@@ -558,25 +558,22 @@ function checkOrientation() {
   var isPortrait = window.innerHeight > window.innerWidth;
   var gv = document.getElementById('ls-grid-view');
   var pv = document.getElementById('portrait-view');
-  
-  if (!currentUser) {
-    // Not logged in: always hide portrait warning, auth works in both orientations
-    if (pv) pv.classList.add('hidden');
-    return;
-  }
-  
-  // Logged in
+  var app = document.getElementById('app');
+
+  // Always hide portrait warning - app works in both orientations
+  if (pv) pv.classList.add('hidden');
+
+  if (!currentUser) return;
+
   if (isPortrait) {
-    // Show portrait rotation prompt
-    if (pv) pv.classList.remove('hidden');
-    document.getElementById('app').style.display = 'none';
+    // Portrait: show app normally
+    if (app) app.style.display = 'flex';
     if (gv) gv.style.display = 'none';
-    var lv2 = document.getElementById('landscape-view');
-    if (lv2 && lv2.classList.contains('open')) closeLandscape();
+    var lv = document.getElementById('landscape-view');
+    if (lv && lv.classList.contains('open')) closeLandscape();
   } else {
-    // Landscape: hide rotation prompt, show grid
-    if (pv) pv.classList.add('hidden');
-    document.getElementById('app').style.display = 'none';
+    // Landscape: hide app, show landscape grid
+    if (app) app.style.display = 'none';
     if (gv) { gv.style.display = 'flex'; renderLsGrid(); }
   }
 }
@@ -675,7 +672,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
     document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = window.innerHeight > window.innerWidth ? 'none' : 'flex';
+    checkOrientation();
     updateProfileUI();
     await loadConnections();
     loadFeed();
