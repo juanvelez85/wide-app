@@ -362,20 +362,19 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); font-family:
   <div class="p-nav">
     <button class="nav-btn active" id="nb-feed" onclick="switchScreen('feed')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-      Main Page
+      Main
     </button>
-    <button class="nav-btn" id="nb-news" onclick="switchScreen('news')" style="position:relative">
-      <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-      <span id="news-badge" style="display:none;position:absolute;top:6px;right:8px;width:14px;height:14px;border-radius:50%;background:#e74c3c;color:#fff;font-size:9px;align-items:center;justify-content:center;">0</span>
-      News
-    </button>
-    <button class="nav-btn" id="nb-messages" onclick="switchScreen('messages')">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Messages
+    <button class="nav-btn" id="nb-connections" onclick="goToConnections()">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Connections
     </button>
     <button class="nav-btn" id="nb-upload" onclick="switchScreen('upload')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
       Post
+    </button>
+    <button class="nav-btn" id="nb-messages" onclick="switchScreen('messages')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Chat
     </button>
     <button class="nav-btn" id="nb-profile" onclick="switchScreen('profile')">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -713,6 +712,22 @@ window.updateProfilePic = async function(e) {
 };
 
 // ── SCREEN NAVIGATION ──
+window.goToConnections = function() {
+  switchScreen('feed');
+  // Activate My Connections tab
+  feedMode = 'connections';
+  ['main','connections','explore'].forEach(function(t) {
+    var b = document.getElementById('ft-' + t);
+    if (b) b.classList.toggle('active', t === 'connections');
+  });
+  // Update nav
+  ['feed','connections','upload','messages','profile'].forEach(function(s) {
+    var nb = document.getElementById('nb-' + s);
+    if (nb) nb.classList.toggle('active', s === 'connections');
+  });
+  renderFeed();
+};
+
 window.switchScreen = function(name) {
   ['feed','news','messages','upload','profile'].forEach(s => {
     document.getElementById('screen-' + s).classList.toggle('active', s === name);
