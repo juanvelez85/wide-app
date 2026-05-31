@@ -354,7 +354,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
         <div id="thought-preview" style="width:100%;aspect-ratio:16/9;border-radius:16px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:24px;margin-bottom:14px;">
           <div id="thought-preview-text" style="color:rgba(255,255,255,0.4);font-size:20px;font-family:'DM Serif Display',serif;text-align:center;line-height:1.4;font-style:italic;">Your thought will appear here...</div>
         </div>
-        <textarea id="thought-text" placeholder="What's on your mind?" oninput="updateThoughtPreview()" style="width:100%;height:100px;padding:12px 14px;border:0.5px solid var(--border-md);border-radius:10px;font-size:15px;font-family:'DM Serif Display',serif;font-style:italic;outline:none;background:var(--surface);color:var(--text);resize:none;margin-bottom:12px;line-height:1.5;"></textarea>
+        <textarea id="thought-text" placeholder="Any Wide Thoughts??" oninput="updateThoughtPreview()" style="width:100%;height:100px;padding:12px 14px;border:0.5px solid var(--border-md);border-radius:10px;font-size:15px;font-family:'DM Serif Display',serif;font-style:italic;outline:none;background:var(--surface);color:var(--text);resize:none;margin-bottom:12px;line-height:1.5;"></textarea>
         <button class="upload-btn" onclick="publishThought()">Post Wide Thought</button>
       </div>
     </div>
@@ -912,7 +912,7 @@ function renderFeed(){
     const isPending=pendingOut.has(post.userId);
     const av=post.userPhoto?'<div class="card-avatar"><img src="'+post.userPhoto+'" alt=""></div>':'<div class="card-avatar">'+ini(post.userName)+'</div>';
     const connBtn=isOwn?'':`<button class="connect-btn${isConn?' connected':''}" data-uid="${post.userId}" onclick="toggleConnect(event,this.dataset.uid)">${isConn?'&#128279;':isPending?'...':'Connect'}</button>`;
-    const actions=`<div class="card-actions"><button class="wow-btn${isWowed?' on':''}" data-id="${post.id}" onclick="wowPost(event,this.dataset.id)">&#10022; Wow <span>${post.wows||0}</span></button><button class="thoughts-btn" data-id="${post.id}" onclick="toggleThoughts(this.dataset.id)">&#128172; Thoughts</button><button class="share-btn" data-id="${post.id}" onclick="sharePost(this.dataset.id)"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button></div><div class="thoughts-section" id="thoughts-\${post.id}" style="display:none;padding:0 14px 12px;"></div>`;
+    const actions=`<div class="card-actions"><button class="wow-btn${isWowed?' on':''}" data-id="${post.id}" onclick="wowPost(event,this.dataset.id)">&#10022; Wow <span>${post.wows||0}</span></button><button class="thoughts-btn" data-id="${post.id}" onclick="toggleThoughts(this.dataset.id)">&#128172; Thoughts?</button><button class="share-btn" data-id="${post.id}" onclick="sharePost(this.dataset.id)"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button></div><div class="thoughts-section" id="thoughts-\${post.id}" style="display:none;padding:0 14px 12px;"></div>`;
     
     if(post.type==='thought'){
       const bg=post.thoughtColor||'#0a0a0a';
