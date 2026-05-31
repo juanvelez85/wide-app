@@ -188,9 +188,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
 .ls-grid-wow{color:rgba(255,255,255,0.55);font-size:9px;margin-top:1px;}
 
 /* LANDSCAPE VIEWER */
-#landscape-view{position:fixed;inset:0;background:#000;z-index:20;display:none;}
-#landscape-view.open{display:block;}
-.ls-media{position:absolute;inset:0;bottom:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;}
+#landscape-view{position:fixed;inset:0;background:#000;z-index:20;display:none;flex-direction:column;}
+#landscape-view.open{display:flex;}
+.ls-media{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.ls-media img,.ls-media video{max-width:100%;max-height:100%;object-fit:contain;}
 .ls-user{display:flex;align-items:center;gap:10px;}
 .ls-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);overflow:hidden;}
 .ls-av img{width:100%;height:100%;object-fit:cover;}
@@ -204,6 +205,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
 /* TOAST */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:#fff;padding:10px 20px;border-radius:99px;font-size:12px;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;z-index:999;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.thoughts-btn{display:flex;align-items:center;gap:5px;padding:5px 14px;border-radius:99px;border:1.5px solid var(--border-md);background:transparent;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'FlamingoRegular',sans-serif;white-space:nowrap;}
+.thoughts-section{border-top:0.5px solid var(--border);}
+.thoughts-btn{display:flex;align-items:center;gap:5px;padding:5px 14px;border-radius:99px;border:1.5px solid var(--border-md);background:transparent;color:var(--muted);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'FlamingoRegular',sans-serif;white-space:nowrap;}
+.thoughts-section{border-top:0.5px solid var(--border);}
 </style>
 </head>
 <body>
@@ -263,10 +268,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
   <div class="app-header">
     <span class="wordmark" onclick="switchScreen('feed')">Wide</span>
     <div class="header-icons">
-      <!-- Wide Thought button -->
-      <button onclick="openQuickThought()" style="display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--border-md);background:transparent;color:var(--text);font-size:11px;font-family:'FlamingoRegular',sans-serif;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;">
-        &#128173; Thought
-      </button>
+      <button onclick="openQuickThought()" style="display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--border-md);background:transparent;color:var(--text);font-size:11px;font-family:'FlamingoRegular',sans-serif;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;">&#128173; Thought</button>
+      <svg class="header-icon" viewBox="0 0 24 24" onclick="switchScreen('upload')"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       <svg class="header-icon" viewBox="0 0 24 24" onclick="switchScreen('profile')"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </div>
   </div>
@@ -279,7 +282,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
       <button class="feed-tab" id="ft-explore" onclick="setFeedTab('explore')">Explore</button>
     </div>
     <div class="feed" id="feed-container"><div class="loading-spinner">Loading...</div></div>
-
   </div>
 
   <!-- NEWS -->
@@ -405,13 +407,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
 </div>
 
 <!-- QUICK THOUGHT MODAL -->
-<div id="quick-thought-modal" style="display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center;padding-bottom:0;">
+<div id="quick-thought-modal" style="display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center;">
   <div style="background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));max-height:90vh;overflow-y:auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <div style="font-family:'DM Serif Display',serif;font-size:20px;">Wide Thought</div>
-      <button onclick="closeQuickThought()" style="width:30px;height:30px;border-radius:50%;background:var(--surface);border:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#10005;</button>
+      <button onclick="closeQuickThought()" style="width:30px;height:30px;border-radius:50%;background:var(--surface);border:none;font-size:16px;cursor:pointer;">&#10005;</button>
     </div>
-    <!-- Color picker -->
     <div style="display:flex;gap:10px;margin-bottom:14px;">
       <div class="thought-color-circle active" id="qt-c1" onclick="setQtColor('#0a0a0a',this)" style="background:#0a0a0a;border-color:#0a0a0a;"></div>
       <div class="thought-color-circle" id="qt-c2" onclick="setQtColor('#1a1a2e',this)" style="background:#1a1a2e;"></div>
@@ -420,13 +421,37 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
       <div class="thought-color-circle" id="qt-c5" onclick="setQtColor('#7f4f24',this)" style="background:#7f4f24;"></div>
       <div class="thought-color-circle" id="qt-c6" onclick="setQtColor('#f7f7f5',this)" style="background:#f7f7f5;outline:1px solid rgba(0,0,0,0.1);"></div>
     </div>
-    <!-- Preview -->
     <div id="qt-preview" style="width:100%;aspect-ratio:16/9;border-radius:12px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:20px;margin-bottom:14px;">
-      <div id="qt-preview-text" style="color:rgba(255,255,255,0.35);font-size:18px;font-family:'DM Serif Display',serif;font-style:italic;text-align:center;line-height:1.4;">What's on your mind?</div>
+      <div id="qt-preview-text" style="color:rgba(255,255,255,0.35);font-size:18px;font-family:'DM Serif Display',serif;font-style:italic;text-align:center;line-height:1.4;">Any Wide Thoughts?</div>
     </div>
-    <textarea id="qt-text" placeholder="What's on your mind?" oninput="updateQtPreview()" maxlength="200" style="width:100%;height:90px;padding:12px 14px;border:0.5px solid var(--border-md);border-radius:10px;font-size:15px;font-family:'DM Serif Display',serif;font-style:italic;outline:none;background:var(--surface);color:var(--text);resize:none;margin-bottom:4px;line-height:1.5;"></textarea>
+    <textarea id="qt-text" placeholder="Any Wide Thoughts?" oninput="updateQtPreview()" maxlength="200"
+      style="width:100%;height:90px;padding:12px 14px;border:0.5px solid var(--border-md);border-radius:10px;font-size:15px;font-family:'DM Serif Display',serif;font-style:italic;outline:none;background:var(--surface);color:var(--text);resize:none;margin-bottom:4px;line-height:1.5;"></textarea>
     <div id="qt-char-count" style="text-align:right;font-size:11px;color:var(--muted);margin-bottom:10px;">0 / 200</div>
-    <button onclick="publishQuickThought()" style="width:100%;padding:14px;background:var(--text);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:var(--font-body);cursor:pointer;" id="qt-btn">Post Wide Thought</button>
+    <button onclick="publishQuickThought()" id="qt-btn" style="width:100%;padding:14px;background:var(--text);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:var(--font-body);cursor:pointer;">Post Wide Thought</button>
+  </div>
+</div>
+
+<!-- QUICK THOUGHT MODAL -->
+<div id="quick-thought-modal" style="display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center;">
+  <div style="background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;">Wide Thought</div>
+      <button onclick="closeQuickThought()" style="width:30px;height:30px;border-radius:50%;background:var(--surface);border:none;font-size:16px;cursor:pointer;">&#10005;</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:14px;">
+      <div class="thought-color-circle active" id="qt-c1" onclick="setQtColor('#0a0a0a',this)" style="background:#0a0a0a;border-color:#0a0a0a;"></div>
+      <div class="thought-color-circle" id="qt-c2" onclick="setQtColor('#1a1a2e',this)" style="background:#1a1a2e;"></div>
+      <div class="thought-color-circle" id="qt-c3" onclick="setQtColor('#2d4a3e',this)" style="background:#2d4a3e;"></div>
+      <div class="thought-color-circle" id="qt-c4" onclick="setQtColor('#4a1942',this)" style="background:#4a1942;"></div>
+      <div class="thought-color-circle" id="qt-c5" onclick="setQtColor('#7f4f24',this)" style="background:#7f4f24;"></div>
+      <div class="thought-color-circle" id="qt-c6" onclick="setQtColor('#f7f7f5',this)" style="background:#f7f7f5;outline:1px solid rgba(0,0,0,0.1);"></div>
+    </div>
+    <div id="qt-preview" style="width:100%;aspect-ratio:16/9;border-radius:12px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:20px;margin-bottom:14px;">
+      <div id="qt-preview-text" style="color:rgba(255,255,255,0.35);font-size:18px;font-family:'DM Serif Display',serif;font-style:italic;text-align:center;line-height:1.4;">Any Wide Thoughts?</div>
+    </div>
+    <textarea id="qt-text" placeholder="Any Wide Thoughts?" oninput="updateQtPreview()" maxlength="200" style="width:100%;height:90px;padding:12px 14px;border:0.5px solid var(--border-md);border-radius:10px;font-size:15px;font-family:'DM Serif Display',serif;font-style:italic;outline:none;background:var(--surface);color:var(--text);resize:none;margin-bottom:4px;line-height:1.5;"></textarea>
+    <div id="qt-char-count" style="text-align:right;font-size:11px;color:var(--muted);margin-bottom:10px;">0 / 200</div>
+    <button onclick="publishQuickThought()" id="qt-btn" style="width:100%;padding:14px;background:var(--text);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:var(--font-body);cursor:pointer;">Post Wide Thought</button>
   </div>
 </div>
 
@@ -477,10 +502,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
   <div class="chat-header">
     <button class="chat-back" onclick="closeChat()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="chat-av" id="chat-av"></div>
-    <div style="flex:1;min-width:0;">
-      <div class="chat-name" id="chat-name">Lorem Ipsum</div>
-      <div id="chat-status" style="display:none;font-size:10px;font-family:'DM Serif Display',serif;font-style:italic;padding:3px 8px;border-radius:6px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></div>
-    </div>
+    <div class="chat-name" id="chat-name">Lorem Ipsum</div>
   </div>
   <div class="chat-messages" id="chat-messages"></div>
   <div class="chat-input-row">
@@ -491,6 +513,131 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fon
 </div>
 
 <script type="module">
+var qtColor = '#0a0a0a';
+window.openQuickThought = function() {
+  document.getElementById('qt-text').value='';
+  document.getElementById('qt-preview-text').textContent='Any Wide Thoughts?';
+  document.getElementById('qt-preview-text').style.color='rgba(255,255,255,0.35)';
+  document.getElementById('qt-preview-text').style.fontSize='18px';
+  document.getElementById('qt-preview').style.background='#0a0a0a';
+  qtColor='#0a0a0a';
+  var cc=document.getElementById('qt-char-count');if(cc)cc.textContent='0 / 200';
+  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c=>{c.style.borderColor='transparent';c.classList.remove('active');});
+  var f=document.getElementById('qt-c1');if(f){f.style.borderColor='#fff';f.classList.add('active');}
+  document.getElementById('quick-thought-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('qt-text').focus(),100);
+};
+window.closeQuickThought=function(){document.getElementById('quick-thought-modal').style.display='none';};
+window.setQtColor=function(color,el){
+  qtColor=color;
+  document.getElementById('qt-preview').style.background=color;
+  const tc=color==='#f7f7f5'?'#0a0a0a':'#fff';
+  const t=document.getElementById('qt-text').value;
+  document.getElementById('qt-preview-text').style.color=t?tc:'rgba('+(color==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';
+  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c=>{c.style.borderColor='transparent';c.classList.remove('active');});
+  if(el){el.style.borderColor=color==='#f7f7f5'?'#0a0a0a':'#fff';el.classList.add('active');}
+};
+window.updateQtPreview=function(){
+  const text=document.getElementById('qt-text').value;
+  const preview=document.getElementById('qt-preview-text');
+  const tc=qtColor==='#f7f7f5'?'#0a0a0a':'#fff';
+  const cc=document.getElementById('qt-char-count');
+  if(cc){cc.textContent=text.length+' / 200';cc.style.color=text.length>180?'#c0392b':'var(--muted)';}
+  if(text){preview.textContent=text;preview.style.opacity='1';preview.style.color=tc;preview.style.fontSize=(text.length<60?20:text.length<120?16:13)+'px';}
+  else{preview.textContent='Any Wide Thoughts?';preview.style.color='rgba('+(qtColor==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';preview.style.fontSize='18px';}
+};
+window.publishQuickThought=async function(){
+  if(!currentUser)return;
+  const text=document.getElementById('qt-text').value.trim();
+  if(!text){showToast('Write something first!');return;}
+  const btn=document.getElementById('qt-btn');btn.textContent='Posting...';btn.disabled=true;
+  try{
+    await addDoc(collection(db,'posts'),{type:'thought',thoughtText:text,thoughtColor:qtColor,caption:text,category:'Wide Thought',userId:currentUser.uid,userName:currentUser.displayName||currentUser.email.split('@')[0],userPhoto:currentUser.photoURL||'',wows:0,createdAt:serverTimestamp()});
+    showToast('Wide Thought posted!');window.closeQuickThought();
+  }catch(e){showToast('Error: '+e.message);}
+  btn.textContent='Post Wide Thought';btn.disabled=false;
+};
+window.toggleThoughts=async function(postId){
+  const section=document.getElementById('thoughts-'+postId);if(!section)return;
+  if(section.style.display==='none'){section.style.display='block';await loadThoughts(postId);}
+  else section.style.display='none';
+};
+async function loadThoughts(postId){
+  const section=document.getElementById('thoughts-'+postId);if(!section)return;
+  section.innerHTML='<div style="font-size:12px;color:var(--muted);padding:8px 0 4px;">Loading...</div>';
+  try{
+    const snap=await getDocs(query(collection(db,'posts',postId,'thoughts'),orderBy('createdAt','asc')));
+    const ini=u=>(u||'?').split(' ').map(n=>n[0]||'').join('').toUpperCase().slice(0,2);
+    let html='';
+    snap.docs.forEach(d=>{
+      const t={...d.data()};
+      const av=t.userPhoto?'<img src="'+t.userPhoto+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="">':'<div style="width:26px;height:26px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:var(--muted);flex-shrink:0;">'+ini(t.userName)+'</div>';
+      html+='<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;">'+av+'<div style="flex:1;min-width:0;background:var(--surface);border-radius:12px;padding:6px 10px;"><span style="font-size:12px;font-weight:500;">'+escHtml(t.userName||'User')+'</span> <span style="font-size:12px;">'+escHtml(t.text||'')+'</span><div style="font-size:10px;color:var(--muted);margin-top:2px;">'+timeAgo(t.createdAt)+'</div></div></div>';
+    });
+        section.innerHTML = html + '<div style="display:flex;gap:6px;align-items:center;margin-top:4px;padding-top:8px;border-top:0.5px solid var(--border);"><input id="thought-input-' + postId + '" data-postid="' + postId + '" placeholder="Add a thought..." maxlength="200" style="flex:1;padding:7px 12px;border:0.5px solid var(--border-md);border-radius:20px;font-size:13px;font-family:var(--font-body);outline:none;background:#fff;" onkeydown="if(event.key==(String.fromCharCode(13)))postThought(this.dataset.postid)"><button data-id="' + postId + '" onclick="postThought(this.dataset.id)" style="padding:7px 14px;border-radius:20px;background:var(--text);color:#fff;border:none;font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">Post</button></div>';
+    const input=document.getElementById('thought-input-'+postId);if(input)input.focus();
+  }catch(e){section.innerHTML='<div style="font-size:12px;color:#c0392b;padding:4px 0;">Could not load.</div>';}
+}
+window.postThought=async function(postId){
+  if(!currentUser)return;
+  const input=document.getElementById('thought-input-'+postId);if(!input)return;
+  const text=input.value.trim();if(!text)return;input.value='';
+  try{
+    await addDoc(collection(db,'posts',postId,'thoughts'),{text,userId:currentUser.uid,userName:currentUser.displayName||currentUser.email.split('@')[0],userPhoto:currentUser.photoURL||'',createdAt:serverTimestamp()});
+    await loadThoughts(postId);
+  }catch(e){showToast('Could not post');}
+};
+
+
+
+// ── QUICK THOUGHT ──
+var qtColor = '#0a0a0a';
+window.openQuickThought = function() {
+  document.getElementById('qt-text').value = '';
+  document.getElementById('qt-preview-text').textContent = "Any Wide Thoughts?";
+  document.getElementById('qt-preview-text').style.color = 'rgba(255,255,255,0.35)';
+  document.getElementById('qt-preview-text').style.fontSize = '18px';
+  document.getElementById('qt-preview').style.background = '#0a0a0a';
+  qtColor = '#0a0a0a';
+  var cc = document.getElementById('qt-char-count'); if(cc) cc.textContent = '0 / 200';
+  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c=>{c.style.borderColor='transparent';c.classList.remove('active');});
+  var first = document.getElementById('qt-c1'); if(first){first.style.borderColor='#fff';first.classList.add('active');}
+  document.getElementById('quick-thought-modal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('qt-text').focus(),100);
+};
+window.closeQuickThought = function() { document.getElementById('quick-thought-modal').style.display = 'none'; };
+window.setQtColor = function(color,el) {
+  qtColor = color;
+  document.getElementById('qt-preview').style.background = color;
+  const tc = color==='#f7f7f5'?'#0a0a0a':'#fff';
+  const text = document.getElementById('qt-text').value;
+  document.getElementById('qt-preview-text').style.color = text ? tc : 'rgba('+(color==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';
+  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c=>{c.style.borderColor='transparent';c.classList.remove('active');});
+  if(el){el.style.borderColor=color==='#f7f7f5'?'#0a0a0a':'#fff';el.classList.add('active');}
+};
+window.updateQtPreview = function() {
+  const text = document.getElementById('qt-text').value;
+  const preview = document.getElementById('qt-preview-text');
+  const tc = qtColor==='#f7f7f5'?'#0a0a0a':'#fff';
+  const cc = document.getElementById('qt-char-count');
+  if(cc){cc.textContent=text.length+' / 200';cc.style.color=text.length>180?'#c0392b':'var(--muted)';}
+  if(text){preview.textContent=text;preview.style.opacity='1';preview.style.color=tc;preview.style.fontSize=(text.length<60?20:text.length<120?16:13)+'px';}
+  else{preview.textContent="Any Wide Thoughts?";preview.style.color='rgba('+(qtColor==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';preview.style.fontSize='18px';}
+};
+window.publishQuickThought = async function() {
+  if(!currentUser)return;
+  const text = document.getElementById('qt-text').value.trim();
+  if(!text){showToast('Write something first!');return;}
+  const btn = document.getElementById('qt-btn');
+  btn.textContent='Posting...';btn.disabled=true;
+  try{
+    await addDoc(collection(db,'posts'),{type:'thought',thoughtText:text,thoughtColor:qtColor,caption:text,category:'Wide Thought',userId:currentUser.uid,userName:currentUser.displayName||currentUser.email.split('@')[0],userPhoto:currentUser.photoURL||'',wows:0,createdAt:serverTimestamp()});
+    showToast('Wide Thought posted!');
+    window.closeQuickThought();
+  }catch(e){showToast('Error: '+e.message);}
+  btn.textContent='Post Wide Thought';btn.disabled=false;
+};
+
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -537,71 +684,6 @@ let _cropX=0,_cropY=0,_cropDrag=false,_cropSX=0,_cropSY=0,_cropW=0,_cropH=0;
 // UTILS
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function timeAgo(ts){if(!ts)return'';const d=ts.toDate?ts.toDate():new Date(ts);const s=Math.floor((Date.now()-d)/1000);if(s<60)return'now';if(s<3600)return Math.floor(s/60)+'m';if(s<86400)return Math.floor(s/3600)+'h';return Math.floor(s/86400)+'d';}
-
-// ── QUICK THOUGHT ──
-var qtColor = '#0a0a0a';
-window.openQuickThought = function() {
-  document.getElementById('qt-text').value = '';
-  document.getElementById('qt-preview-text').textContent = "What\'s on your mind?";
-  document.getElementById('qt-preview-text').style.color = 'rgba(255,255,255,0.35)';
-  document.getElementById('qt-preview-text').style.fontSize = '18px';
-  document.getElementById('qt-preview').style.background = '#0a0a0a';
-  qtColor = '#0a0a0a';
-  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c => { c.style.borderColor = 'transparent'; c.classList.remove('active'); });
-  const first = document.getElementById('qt-c1');
-  if(first) { first.style.borderColor = '#fff'; first.classList.add('active'); }
-  document.getElementById('quick-thought-modal').style.display = 'flex';
-  setTimeout(() => document.getElementById('qt-text').focus(), 100);
-};
-window.closeQuickThought = function() {
-  document.getElementById('quick-thought-modal').style.display = 'none';
-};
-window.setQtColor = function(color, el) {
-  qtColor = color;
-  document.getElementById('qt-preview').style.background = color;
-  const tc = color === '#f7f7f5' ? '#0a0a0a' : '#fff';
-  document.getElementById('qt-preview-text').style.color = document.getElementById('qt-text').value ? tc : 'rgba('+( color==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';
-  document.querySelectorAll('#quick-thought-modal .thought-color-circle').forEach(c => { c.style.borderColor = 'transparent'; c.classList.remove('active'); });
-  if(el) { el.style.borderColor = color === '#f7f7f5' ? '#0a0a0a' : '#fff'; el.classList.add('active'); }
-};
-window.updateQtPreview = function() {
-  const text = document.getElementById('qt-text').value;
-  const preview = document.getElementById('qt-preview-text');
-  const tc = qtColor === '#f7f7f5' ? '#0a0a0a' : '#fff';
-  const cc = document.getElementById('qt-char-count');
-  if(cc) { cc.textContent = text.length + ' / 200'; cc.style.color = text.length > 180 ? '#c0392b' : 'var(--muted)'; }
-  if(text) {
-    preview.textContent = text;
-    preview.style.opacity = '1';
-    preview.style.color = tc;
-    preview.style.fontSize = (text.length < 60 ? 20 : text.length < 120 ? 16 : 13) + 'px';
-  } else {
-    preview.textContent = "What's on your mind?";
-    preview.style.color = 'rgba('+(qtColor==='#f7f7f5'?'10,10,10':'255,255,255')+',0.35)';
-    preview.style.fontSize = '18px';
-  }
-};
-window.publishQuickThought = async function() {
-  if(!currentUser) return;
-  const text = document.getElementById('qt-text').value.trim();
-  if(!text) { showToast('Write something first!'); return; }
-  const btn = document.getElementById('qt-btn');
-  btn.textContent = 'Posting...'; btn.disabled = true;
-  try {
-    await addDoc(collection(db,'posts'), {
-      type: 'thought', thoughtText: text, thoughtColor: qtColor,
-      caption: text, category: 'Wide Thought',
-      userId: currentUser.uid,
-      userName: currentUser.displayName || currentUser.email.split('@')[0],
-      userPhoto: currentUser.photoURL || '',
-      wows: 0, createdAt: serverTimestamp()
-    });
-    showToast('Wide Thought posted!');
-    window.closeQuickThought();
-  } catch(e) { showToast('Error: ' + e.message); }
-  btn.textContent = 'Post Wide Thought'; btn.disabled = false;
-};
-
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function makeWaveBars(dir){const h=[4,8,12,8,16,10,6,14,8,4];return h.map(n=>'<span style="height:'+n+'px;background:'+(dir==='out'?'rgba(255,255,255,0.5)':'var(--muted)')+'"></span>').join('');}
 
@@ -830,7 +912,7 @@ function renderFeed(){
     const isPending=pendingOut.has(post.userId);
     const av=post.userPhoto?'<div class="card-avatar"><img src="'+post.userPhoto+'" alt=""></div>':'<div class="card-avatar">'+ini(post.userName)+'</div>';
     const connBtn=isOwn?'':`<button class="connect-btn${isConn?' connected':''}" data-uid="${post.userId}" onclick="toggleConnect(event,this.dataset.uid)">${isConn?'&#128279;':isPending?'...':'Connect'}</button>`;
-    const actions=`<div class="card-actions"><button class="wow-btn${isWowed?' on':''}" data-id="${post.id}" onclick="wowPost(event,this.dataset.id)">&#10022; Wow <span>${post.wows||0}</span></button><button class="share-btn" data-id="${post.id}" onclick="sharePost(this.dataset.id)"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button></div>`;
+    const actions=`<div class="card-actions"><button class="wow-btn${isWowed?' on':''}" data-id="${post.id}" onclick="wowPost(event,this.dataset.id)">&#10022; Wow <span>${post.wows||0}</span></button><button class="thoughts-btn" data-id="${post.id}" onclick="toggleThoughts(this.dataset.id)">&#128172; Thoughts</button><button class="share-btn" data-id="${post.id}" onclick="sharePost(this.dataset.id)"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button></div><div class="thoughts-section" id="thoughts-\${post.id}" style="display:none;padding:0 14px 12px;"></div>`;
     
     if(post.type==='thought'){
       const bg=post.thoughtColor||'#0a0a0a';
@@ -963,14 +1045,7 @@ function openLandscapeAt(ai,pi){
     media.innerHTML=`<div style="width:100%;height:100%;background:${bg};display:flex;align-items:center;justify-content:center;padding:40px;"><div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:${fs}px;color:${tc};text-align:center;line-height:1.5;max-width:700px;">${escHtml(post.thoughtText||'')} </div></div>`;
   }else{
     const pX=post.cropX!==undefined?post.cropX:50,pY=post.cropY!==undefined?post.cropY:50;
-    if(post.type==='video'){
-    // Always fill height for videos — portrait videos show bars on sides (correct)
-    media.innerHTML = `<video src="${post.url}" autoplay loop playsinline
-      style="position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;max-width:none;background:#000;"
-      onclick="lsToggleControls()"></video>`;
-  } else {
-    media.innerHTML = `<img src="${post.url}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:${pX}% ${pY}%" alt="">`;
-  }
+    media.innerHTML=post.type==='video'?`<video src="${post.url}" autoplay muted loop playsinline style="max-width:100%;max-height:100%;object-fit:contain;"></video>`:`<img src="${post.url}" style="max-width:100%;max-height:100%;object-fit:contain;object-position:${pX}% ${pY}%" alt="">`;
   }
   const ini2=(post.userName||'?').split(' ').map(n=>n[0]||'').join('').toUpperCase().slice(0,2);
   const avEl=document.getElementById('ls-av');avEl.innerHTML=post.userPhoto?'<img src="'+post.userPhoto+'" alt="">':ini2;
@@ -1009,7 +1084,6 @@ function updateLsConnectBtn(){
   else if(pendingOut.has(post.userId)){btn.textContent='...';btn.className='ls-connect-btn';}
   else{btn.textContent='Connect';btn.className='ls-connect-btn';}
 }
-window.lsToggleControls=function(){if(lsUiVisible)hideLsUI();else showLsUI();};
 window.lsToggleConnect=async function(){
   if(!lsCurrentPostId)return;
   const post=allPosts.find(p=>p.id===lsCurrentPostId);if(!post)return;
@@ -1163,30 +1237,12 @@ async function loadNewsTab(){
 
 // CHAT
 function getChatId(a,b){return[a,b].sort().join('_');}
-window.openChat=async function(userId,name,initials,photo){
+window.openChat=function(userId,name,initials,photo){
   currentChatUserId=userId;
   document.getElementById('chat-name').textContent=name||'User';
-  const avEl=document.getElementById('chat-av');avEl.innerHTML=photo?`<img src="${photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:(initials||'?');
-  // Clear status while loading
-  const statusEl=document.getElementById('chat-status');
-  if(statusEl){statusEl.textContent='';statusEl.style.display='none';}
+  const avEl=document.getElementById('chat-av');avEl.innerHTML=photo?'<img src="'+photo+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">':initials||'?';
   document.getElementById('chat-screen').classList.add('open');
   loadChatMessages(userId);
-  // Load user's last Wide Thought as status
-  try{
-    const postsSnap=await getDocs(query(collection(db,'posts'),where('userId','==',userId),where('type','==','thought'),orderBy('createdAt','desc')));
-    if(!postsSnap.empty){
-      const lastThought=postsSnap.docs[0].data();
-      const bg=lastThought.thoughtColor||'#0a0a0a';
-      const tc=bg==='#f7f7f5'?'#0a0a0a':'#fff';
-      if(statusEl){
-        statusEl.style.display='block';
-        statusEl.style.background=bg;
-        statusEl.style.color=tc;
-        statusEl.textContent=lastThought.thoughtText||'';
-      }
-    }
-  }catch(e){}
 };
 window.closeChat=function(){
   document.getElementById('chat-screen').classList.remove('open');
