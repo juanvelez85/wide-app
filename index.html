@@ -915,10 +915,22 @@ function renderFeed(){
     const actions=`<div class="card-actions"><button class="wow-btn${isWowed?' on':''}" data-id="${post.id}" onclick="wowPost(event,this.dataset.id)">&#10022; Wow <span>${post.wows||0}</span></button><button class="thoughts-btn" data-id="${post.id}" onclick="toggleThoughts(this.dataset.id)">&#128172; Thoughts?</button><button class="share-btn" data-id="${post.id}" onclick="sharePost(this.dataset.id)"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share</button></div><div class="thoughts-section" id="thoughts-${post.id}" style="display:none;padding:0 14px 12px;"></div>`;
     
     if(post.type==='thought'){
-      const bg=post.thoughtColor||'#0a0a0a';
-      const tc=bg==='#f7f7f5'?'#0a0a0a':'#fff';
-      const fs=(post.thoughtText||'').length<60?22:(post.thoughtText||'').length<120?17:14;
-      return `<div class="post-card" id="post-${post.id}"><div class="card-header">${av}<div style="flex:1"><div class="card-user">${escHtml(post.userName||'Lorem Ipsum')}</div><div class="card-info">Wide Thought &middot; ${timeAgo(post.createdAt)}</div></div>${connBtn}</div><div class="thought-card" style="background:${bg}" data-id="${post.id}" onclick="openLandscape(this.dataset.id)"><div class="thought-card-text" style="color:${tc};font-size:${fs}px">${escHtml(post.thoughtText||'')} </div></div>${actions}</div>`;
+      const tColor = post.thoughtColor || '#0a0a0a';
+      const dot = tColor === '#0a0a0a' ? '' : `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${tColor};margin-right:6px;vertical-align:middle;"></span>`;
+      return `<div class="post-card" id="post-${post.id}" style="overflow:visible;">
+        <div class="card-header">
+          ${av}
+          <div style="flex:1">
+            <div class="card-user">${escHtml(post.userName||'Lorem Ipsum')}</div>
+            <div class="card-info">${dot}Wide Thought &middot; ${timeAgo(post.createdAt)}</div>
+          </div>
+          ${connBtn}
+        </div>
+        <div style="padding:2px 16px 14px;">
+          <div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:${(post.thoughtText||'').length<80?20:(post.thoughtText||'').length<140?17:15}px;line-height:1.6;color:var(--text);">${escHtml(post.thoughtText||'')}</div>
+        </div>
+        ${actions}
+      </div>`;
     }
     
     const pX=post.cropX!==undefined?post.cropX:50;
